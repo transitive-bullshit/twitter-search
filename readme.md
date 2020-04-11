@@ -43,7 +43,7 @@ The key to Saasify's power is that it handles all of this SaaS boilerplate for y
 
 #### Implementation
 
-[Twitter Search's](https://twitter-search.io) unique value proposition comes in the form of two pieces: a REST API that handles the core functionality ([src/](./src)) and a webapp for the UI ([web/](./web)).
+[Twitter Search's](https://twitter-search.io) unique value prop comes in the form of two pieces: a REST API that handles the core functionality ([src/](./src)) and a webapp for the UI ([web/](./web)).
 
 The REST API is written in TypeScript using [Koa](https://koajs.com) and [tsoa](https://github.com/lukeautry/tsoa). Each API endpoint receives some custom headers from Saasify's API proxy that let it know everything about the authenticated user making the request.
 
@@ -61,7 +61,7 @@ Of course, this product's core feature set wouldn't be possible without [Algolia
 
 #### Looking to the future
 
-The way this product was built may sound a bit complicated and it's definitely not as simple as we'd like at the moment. Even so, we hope it provides a great example of the potential for the platform we're building.
+The way this product was built may sound a bit complicated and it's definitely not as simple as we'd like at the moment. Even so, we hope it provides a good example of Saasify's potential to help developers quickly get their ideas off the ground.
 
 Our team is working very hard to improve the developer experience that Saasify provides, and we hope to make this type of integration much simpler in the coming months. Feel free to follow our progress via our [open source repo](https://github.com/saasify-sh/saasify).
 
