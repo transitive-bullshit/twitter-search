@@ -1,5 +1,11 @@
 {
   "version": 2,
+  "env": {
+    "ALGOLIA_CLIENT_ID": "@twitter_search_algolia_client_id",
+    "ALGOLIA_SECRET_KEY": "@twitter_search_algolia_secret_key",
+    "PROVIDER_TWITTER_CLIENT_ID": "@twitter_search_provider_twitter_client_id",
+    "PROVIDER_TWITTER_CLIENT_SECRET": "@twitter_search_provider_twitter_client_secret"
+  },
   "builds": [{ "src": "build/server.js", "use": "@now/node" }],
   "routes": [{ "src": ".*", "dest": "build/server.js" }]
 }
