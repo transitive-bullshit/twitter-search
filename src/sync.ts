@@ -15,12 +15,6 @@ export async function syncAccount(
 
   const user = await twitterClient.get('account/verify_credentials')
 
-  // const page = await twitterClient.get('statuses/user_timeline', {
-  //   count: 1
-  // })
-  // console.log(page)
-  // return
-
   const [statuses, favorites] = await Promise.all([
     resolvePagedTwitterQuery(twitterClient, 'statuses/user_timeline', {
       include_rts: true
