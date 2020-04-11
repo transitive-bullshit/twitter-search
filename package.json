@@ -33,6 +33,7 @@
     "koa-compress": "^3.0.0",
     "koa-router": "^8.0.8",
     "lodash.pick": "^4.4.0",
+    "p-retry": "^4.2.0",
     "tsoa": "^2.5.13",
     "twitter-lite": "^0.9.4"
   },
@@ -45,6 +46,7 @@
     "@types/koa__cors": "^3.0.1",
     "@types/lodash.pick": "^4.4.6",
     "@types/node": "^13.11.1",
+    "@types/p-retry": "^3.0.1",
     "cross-env": "^7.0.2",
     "del-cli": "^3.0.0",
     "nodemon": "^2.0.3",

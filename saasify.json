@@ -3,8 +3,8 @@
   "openapi": "./dist/swagger.json",
   "saas": {
     "name": "Twitter Search",
-    "heading": "Better Twitter Search",
-    "subheading": "Algolia search for your personal and favorited tweets.",
+    "heading": "Instant Twitter Search",
+    "subheading": "**Powerful & instant search** across all your tweets and likes that syncs regularly. Powered by Algolia.",
     "repo": "https://github.com/saasify-sh/twitter-search",
     "sections": {
       "pricing": {
@@ -35,13 +35,21 @@
     {
       "name": "Free",
       "rateLimit": null,
-      "features": ["Free 7-day trial"]
+      "features": [
+        "Search across your 100 most recent tweets",
+        "Syncing with your Twitter activity is disabled",
+        "Perfect to try things out before upgrading"
+      ]
     },
     {
       "name": "Pro",
       "amount": 499,
       "rateLimit": null,
-      "features": ["Full Algolia search for your personal and liked tweets"]
+      "features": [
+        "Full Algolia search across all your personal and liked tweets",
+        "Regular syncing of your Twitter activity",
+        "The world's fastest and most relevant personal Twitter search"
+      ]
     }
   ]
 }

@@ -27,7 +27,7 @@ export class TweetIndexController extends Controller {
     @Header('x-twitter-access-token-secret') twitterAccessTokenSecret: string,
     @Header('x-saasify-user') userId: string
   ): Promise<TweetIndex> {
-    console.log('getIndex', { userId })
+    console.log('syncTweetIndex', { userId })
 
     const index = await sync.getIndex(userId)
 

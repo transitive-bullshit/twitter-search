@@ -11,17 +11,22 @@
     "postdeploy": "now rm --safe --yes twitter-search-webapp"
   },
   "dependencies": {
+    "@chakra-ui/core": "^0.7.0",
+    "@emotion/core": "^10.0.28",
+    "@emotion/styled": "^10.0.27",
     "algoliasearch": "^4.1.0",
     "classnames": "^2.2.6",
+    "emotion-theming": "^10.0.27",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-instantsearch-dom": "^6.4.0",
+    "react-masonry-css": "^1.0.14",
+    "react-tweet-embed": "^1.2.2",
     "saasify-sdk": "^1.18.11"
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.8.3",
-    "babel-plugin-import": "^1.13.0",
     "customize-cra": "^0.9.1",
     "react-app-rewired": "^2.1.5",
     "react-scripts": "^3.3.0"

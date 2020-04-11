@@ -1,4 +1,4 @@
-import Twitter from 'twitter-lite'
+import Twitter = require('twitter-lite')
 
 const saasifyClientId = process.env.PROVIDER_TWITTER_CLIENT_ID
 const saasifyClientSecret = process.env.PROVIDER_TWITTER_CLIENT_SECRET

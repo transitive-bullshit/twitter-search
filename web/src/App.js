@@ -1,94 +1,118 @@
 import React from 'react'
+import { CSSReset, ThemeProvider } from '@chakra-ui/core'
 
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  NavLink,
-  withRouter
-} from 'react-router-dom'
-import { Breadcrumb, Spin } from 'antd'
-
+import { TweetIndexSearch, LoadingIndicator, Paper } from './components'
 import { sdk } from './lib/sdk'
-import { JobsTable, JobLogsTable, Paper } from './components'
 
 import styles from './styles/app.module.css'
 
-const Layout = withRouter(({ location, children }) => {
-  const pathSnippets = location.pathname.split('/').filter(Boolean)
-  const extraBreadcrumbItems = pathSnippets.map((_, index) => {
-    const url = `/${pathSnippets.slice(0, index + 1).join('/')}`
-
-    return (
-      <Breadcrumb.Item key={url}>
-        <NavLink to={url} activeClassName={styles.activeLink}>
-          Job Logs
-        </NavLink>
-      </Breadcrumb.Item>
-    )
-  })
-
-  const breadcrumbItems = [
-    <Breadcrumb.Item key='home'>
-      <NavLink to='/' activeClassName={styles.activeLink}>
-        Home
-      </NavLink>
-    </Breadcrumb.Item>
-  ].concat(extraBreadcrumbItems)
-
-  return (
-    <Paper className={styles.content}>
-      <Breadcrumb className={styles.breadcrumb}>{breadcrumbItems}</Breadcrumb>
-
-      {children}
-    </Paper>
-  )
-})
-
 export class App extends React.Component {
   state = {
-    status: 'loading'
+    status: 'bootstrapping',
+    loading: false,
+    syncing: false,
+    searchIndex: null,
+    error: null
   }
 
   componentDidMount() {
     sdk.ready
       .then(() => {
+        this._reset()
         this.setState({ status: 'ready' })
       })
       .catch((err) => {
         console.error(err)
-        this.setState({ status: 'error' })
+        this.setState({ status: 'error', error: err.message })
       })
   }
 
   render() {
-    const { status } = this.state
+    const { status, loading, syncing, searchIndex, error } = this.state
+    console.log({ searchIndex })
+
+    let content = null
+
+    if (status === 'bootstrapping') {
+      content = (
+        <Paper className={styles.content}>
+          <LoadingIndicator />
+        </Paper>
+      )
+    } else if (status === 'error') {
+      content = <Paper className={styles.content}>Error: {error}</Paper>
+    } else {
+      content = (
+        <div className={styles.content}>
+          {loading && <LoadingIndicator />}
+
+          {syncing ? (
+            <h3>Syncing your Tweets...</h3>
+          ) : (
+            searchIndex && (
+              <TweetIndexSearch indexName={searchIndex.indexName} />
+            )
+          )}
+        </div>
+      )
+    }
 
     return (
-      <div className={styles.body}>
-        {status === 'loading' && <Spin />}
-        {status === 'error' && 'Error connecting to Saasify'}
-        {status === 'ready' && (
-          <Router>
-            <Layout>
-              <Switch>
-                <Route
-                  path='/'
-                  exact
-                  breadcrumbName='Home'
-                  component={JobsTable}
-                />
+      <ThemeProvider>
+        <CSSReset />
 
-                <Route
-                  path='/:jobId'
-                  breadcrumbName=':jobId Job Logs'
-                  component={JobLogsTable}
-                />
-              </Switch>
-            </Layout>
-          </Router>
-        )}
-      </div>
+        <div className={styles.body}>{content}</div>
+      </ThemeProvider>
     )
+  }
+
+  _reset() {
+    this.setState({ loading: true })
+
+    sdk.api
+      .get('/')
+      .then(({ body: searchIndex }) => {
+        console.log({ searchIndex })
+
+        if (!searchIndex.exists) {
+          this._sync()
+        } else {
+          this._sync()
+        }
+
+        this.setState({ loading: false, searchIndex })
+      })
+      .catch((err) => {
+        console.error(err)
+        this.setState({ status: 'error', error: err.message, loading: false })
+      })
+  }
+
+  _sync() {
+    this.setState({ loading: true, syncing: true })
+
+    sdk.api
+      .put('/')
+      .then(({ body: searchIndex }) => {
+        console.log({ searchIndex })
+
+        this.setState({
+          status: 'ready',
+          loading: false,
+          syncing: false,
+          searchIndex
+        })
+      })
+      .catch((err) => {
+        console.error(err)
+
+        this.setState({
+          status: 'error',
+          error: err.message,
+          syncing: false,
+          loading: false,
+          searchIndex: null
+        })
+      })
   }
 }
