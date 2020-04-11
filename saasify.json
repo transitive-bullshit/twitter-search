@@ -8,6 +8,13 @@
     "repo": "https://github.com/saasify-sh/twitter-search",
     "logo": "media/logo.svg",
     "favicon": "media/favicon.ico",
+    "theme": {
+      "name": "waves",
+      "buttonStyle": "rounded",
+      "color": "#2b74ed",
+      "codeBlockDark": true,
+      "backgroundImage": "https://images.unsplash.com/photo-1506220926022-cc5c12acdb35?ixlib=rb-1.2.1&auto=format&fit=crop&w=2550&q=80"
+    },
     "sections": {
       "docs": false,
       "pricing": {
@@ -46,7 +53,7 @@
       {
         "name": "Automatic syncing",
         "desc": "Upgrade to enable automatic syncing of your Twitter account.",
-        "icon": "media/icons/.svg"
+        "icon": "media/icons/sync.svg"
       },
       {
         "name": "Reliable",
