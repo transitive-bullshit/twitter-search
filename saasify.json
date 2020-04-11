@@ -4,11 +4,12 @@
   "saas": {
     "name": "Twitter Search",
     "heading": "Instant Twitter Search",
-    "subheading": "**Powerful & instant search** across your entire Twitter history. Powered by Algolia.",
+    "subheading": "Instantly search across your entire Twitter history. Beautiful UX powered by Algolia.",
     "repo": "https://github.com/saasify-sh/twitter-search",
     "logo": "media/logo.svg",
     "favicon": "media/favicon.ico",
     "sections": {
+      "docs": false,
       "pricing": {
         "showMeteredBilling": false
       },
@@ -20,7 +21,49 @@
     "webapp": {
       "url": "https://twitter-search-webapp.now.sh",
       "devUrl": "http://localhost:7000"
-    }
+    },
+    "features": [
+      {
+        "name": "Simple setup",
+        "desc": "Easy & **free** to get started. The free tier searches across your 100 most recent tweets.",
+        "icon": "media/icons/setup.svg"
+      },
+      {
+        "name": "Blazing fast",
+        "desc": "Instant search results including custom filters powered by Algolia.",
+        "icon": "media/icons/fast.svg"
+      },
+      {
+        "name": "Beautiful UX",
+        "desc": "Our search UI is simple, responsive, and most importantly **fast**.",
+        "icon": "media/icons/search.svg"
+      },
+      {
+        "name": "Simple pricing",
+        "desc": "It's easy to test out, and once you're ready to upgrade, we'll sync your full Twitter history.",
+        "icon": "media/icons/stripe.svg"
+      },
+      {
+        "name": "Automatic syncing",
+        "desc": "Upgrade to enable automatic syncing of your Twitter account.",
+        "icon": "media/icons/.svg"
+      },
+      {
+        "name": "Reliable",
+        "desc": "Built on top of Algolia and serverless functions for maximum availability and scale.",
+        "icon": "media/icons/cluster.svg"
+      },
+      {
+        "name": "World class",
+        "desc": "The world's best personal Twitter search.",
+        "icon": "media/icons/global.svg"
+      },
+      {
+        "name": "Open source",
+        "desc": "The entire product is [open source](https://github.com/saasify-sh/twitter-search).",
+        "icon": "media/icons/open-source.svg"
+      }
+    ]
   },
   "authProviders": {
     "twitter": {

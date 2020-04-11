@@ -54,6 +54,7 @@ export function RegisterRoutes(router: KoaRouter) {
         twitterAccessToken: { "in": "header", "name": "x-twitter-access-token", "required": true, "dataType": "string" },
         twitterAccessTokenSecret: { "in": "header", "name": "x-twitter-access-token-secret", "required": true, "dataType": "string" },
         userId: { "in": "header", "name": "x-saasify-user", "required": true, "dataType": "string" },
+        plan: { "in": "header", "name": "x-saasify-plan", "required": true, "dataType": "string" },
       };
 
       let validatedArgs: any[] = [];
