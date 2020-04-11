@@ -10,7 +10,7 @@ export class TweetIndexController extends Controller {
   public async getTweetIndex(
     @Header('x-saasify-user') userId: string
   ): Promise<TweetIndex> {
-    console.log('getIndex', { userId })
+    console.log('getTweetIndex', { userId })
 
     const index = await sync.getIndex(userId)
     const exists = await index.exists()
@@ -25,9 +25,13 @@ export class TweetIndexController extends Controller {
   public async syncTweetIndex(
     @Header('x-twitter-access-token') twitterAccessToken: string,
     @Header('x-twitter-access-token-secret') twitterAccessTokenSecret: string,
-    @Header('x-saasify-user') userId: string
+    @Header('x-saasify-user') userId: string,
+    @Header('x-saasify-plan') plan: string
   ): Promise<TweetIndex> {
     console.log('syncTweetIndex', { userId })
+
+    // TODO: support full vs partial sync so we don't have to perform a full
+    // sync of your entire twitter history every time
 
     const index = await sync.getIndex(userId)
 
@@ -36,7 +40,7 @@ export class TweetIndexController extends Controller {
       accessTokenSecret: twitterAccessTokenSecret
     })
 
-    await sync.syncAccount(twitterClient, index)
+    await sync.syncAccount(twitterClient, index, plan)
 
     return {
       indexName: index.indexName,

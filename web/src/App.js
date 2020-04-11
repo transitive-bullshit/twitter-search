@@ -1,6 +1,8 @@
 import React from 'react'
 import { CSSReset, ThemeProvider } from '@chakra-ui/core'
 
+import { Button } from '@chakra-ui/core'
+
 import { TweetIndexSearch, LoadingIndicator, Paper } from './components'
 import { sdk } from './lib/sdk'
 
@@ -31,6 +33,8 @@ export class App extends React.Component {
     const { status, loading, syncing, searchIndex, error } = this.state
     console.log({ searchIndex })
 
+    const isFree = sdk.consumer?.plan === 'free'
+
     let content = null
 
     if (status === 'bootstrapping') {
@@ -47,7 +51,20 @@ export class App extends React.Component {
           {loading && <LoadingIndicator />}
 
           {syncing ? (
-            <h3>Syncing your Tweets...</h3>
+            <>
+              <h3>Syncing your Tweets...</h3>
+
+              {isFree ? (
+                <p>
+                  We only sync your 100 most recent tweets on the free plan.
+                </p>
+              ) : (
+                <p>
+                  This may take a few minutes as we index your entire Twitter
+                  history.
+                </p>
+              )}
+            </>
           ) : (
             searchIndex && (
               <TweetIndexSearch indexName={searchIndex.indexName} />
@@ -61,12 +78,25 @@ export class App extends React.Component {
       <ThemeProvider>
         <CSSReset />
 
-        <div className={styles.body}>{content}</div>
+        <div className={styles.body}>
+          {!isFree && (
+            <Button
+              className={styles.syncButton}
+              isDisabled={syncing || loading}
+              leftIcon='repeat'
+              onClick={this._sync}
+            >
+              Sync Tweets
+            </Button>
+          )}
+
+          {content}
+        </div>
       </ThemeProvider>
     )
   }
 
-  _reset() {
+  _reset = () => {
     this.setState({ loading: true })
 
     sdk.api
@@ -86,7 +116,7 @@ export class App extends React.Component {
       })
   }
 
-  _sync() {
+  _sync = () => {
     this.setState({ loading: true, syncing: true })
 
     sdk.api

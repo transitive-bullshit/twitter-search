@@ -21,3 +21,8 @@
 .breadcrumb {
   margin-bottom: 1em;
 }
+
+.syncButton {
+  align-self: center;
+  margin-bottom: 24px;
+}

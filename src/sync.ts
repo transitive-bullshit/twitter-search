@@ -9,17 +9,18 @@ const MAX_RESULTS = 20000
 
 export async function syncAccount(
   twitterClient: any,
-  index: algolia.SearchIndex
+  index: algolia.SearchIndex,
+  plan: string = 'free'
 ) {
   await configureIndex(index)
 
   const user = await twitterClient.get('account/verify_credentials')
 
   const [statuses, favorites] = await Promise.all([
-    resolvePagedTwitterQuery(twitterClient, 'statuses/user_timeline', {
+    resolvePagedTwitterQuery(twitterClient, 'statuses/user_timeline', plan, {
       include_rts: true
     }),
-    resolvePagedTwitterQuery(twitterClient, 'favorites/list')
+    resolvePagedTwitterQuery(twitterClient, 'favorites/list', plan)
   ])
 
   console.log('statuses', statuses.length, 'favorites', favorites.length)
@@ -79,14 +80,17 @@ export async function configureIndex(index: algolia.SearchIndex) {
 async function resolvePagedTwitterQuery(
   twitterClient,
   endpoint: string,
+  plan: string,
   opts?: any
 ) {
   let results = []
   let max_id = undefined
   let page = 0
 
+  const count = plan === 'free' ? 100 : MAX_PAGE_SIZE
+
   do {
-    const params = { count: MAX_PAGE_SIZE, ...opts }
+    const params = { count, ...opts }
     if (max_id) {
       params.max_id = max_id
     }
@@ -127,6 +131,10 @@ async function resolvePagedTwitterQuery(
     )
 
     if (results.length > MAX_RESULTS) {
+      break
+    }
+
+    if (plan === 'free') {
       break
     }
 
