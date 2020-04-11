@@ -24,7 +24,7 @@
 
 **[This entire product](https://twitter-search.io) was built and launched in around 8 hours**.
 
-The only reason it was possible to build a production SaaS MVP this quickly was because [Saasify](https://saasify.sh) handled all of the tedious parts, including:
+The only reason it was possible to build a production-quality SaaS MVP this quickly was because [Saasify](https://saasify.sh) handled all of the tedious parts, including:
 
 - User accounts
 - Stripe billing
