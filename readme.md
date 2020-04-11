@@ -1,6 +1,6 @@
 # Twitter Search
 
-> Instantly search across your entire Twitter history with a beautiful UI powered by Algolia.
+> Instantly search across your entire Twitter history with a beautiful UI powered by Algolia. ([link](https://twitter-search.io))
 
 [![Build Status](https://travis-ci.com/saasify-sh/twitter-search.svg?branch=master)](https://travis-ci.com/saasify-sh/twitter-search) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
@@ -15,8 +15,8 @@
 - 💯 **Open source**
 - 🙈 [Hosted version](https://twitter-search.io) provided by [Saasify](https://saasify.sh)
 - 🙉 Self-hosted version is easy to set up
-- 🐳 Built using [Algolia](https://www.algolia.com), [Twitter API](https://developer.twitter.com/en/docs), and [ZEIT](https://zeit.co), and
-- 💪 Scales "infinitely" via serverless magics
+- 🐳 Built using [Algolia](https://www.algolia.com), [Twitter API](https://developer.twitter.com/en/docs), and [ZEIT](https://zeit.co)
+- 💪 Scales pretty nicely via serverless magics
 - 🤖 Includes an auto-generated OpenAPI spec
 - 👍 Super simple -- Algolia and Saasify do all the hard work for us
 
@@ -24,7 +24,7 @@
 
 **[This entire product](https://twitter-search.io) was built and launched in around 8 hours**.
 
-The only reason it was remotely possible to build a production-quality MVP this quickly was because Saasify handled all of the boring and time-consuming parts, including:
+The only reason it was remotely possible to build a production-quality MVP this quickly was because [Saasify](https://saasify.sh) handled all of the tedious parts, including:
 
 - User accounts
 - Stripe billing
@@ -37,11 +37,13 @@ The only reason it was remotely possible to build a production-quality MVP this 
 - Monitoring
 - Lots of glue and book-keeping
 
+All of these features have been auto-generated via this simple [saasify.json](https://github.com/saasify-sh/twitter-search/blob/master/saasify.json) config file.
+
 The key to Saasify's power is that it handles all of this SaaS boilerplate for you, allowing you to focus solely on your product's **unique value proposition**.
 
 #### Implementation
 
-In the case of [Twitter Search](https://twitter-search.io), its unique value proposition comes in the form of two pieces: a REST API that handles the core functionality ([src/](./src)) and a webapp for the UI ([web/](./web)).
+[Twitter Search's](https://twitter-search.io) unique value proposition comes in the form of two pieces: a REST API that handles the core functionality ([src/](./src)) and a webapp for the UI ([web/](./web)).
 
 The REST API is written in TypeScript using [Koa](https://koajs.com) and [tsoa](https://github.com/lukeautry/tsoa). Each API endpoint receives some custom headers from Saasify's API proxy that let it know everything about the authenticated user making the request.
 
