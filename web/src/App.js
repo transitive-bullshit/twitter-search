@@ -105,7 +105,7 @@ export class App extends React.Component {
         console.log({ searchIndex })
 
         if (!searchIndex.exists) {
-          this._sync()
+          this._sync({ first: true })
         }
 
         this.setState({ loading: false, searchIndex })
@@ -116,7 +116,7 @@ export class App extends React.Component {
       })
   }
 
-  _sync = () => {
+  _sync = (opts = {}) => {
     this.setState({ loading: true, syncing: true })
 
     sdk.api
@@ -124,12 +124,16 @@ export class App extends React.Component {
       .then(({ body: searchIndex }) => {
         console.log({ searchIndex })
 
-        this.setState({
-          status: 'ready',
-          loading: false,
-          syncing: false,
-          searchIndex
-        })
+        if (opts.first) {
+          setTimeout(() => {
+            this.setState({
+              status: 'ready',
+              loading: false,
+              syncing: false,
+              searchIndex
+            })
+          }, 3000)
+        }
       })
       .catch((err) => {
         console.error(err)
