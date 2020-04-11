@@ -76,8 +76,6 @@ export class App extends React.Component {
 
         if (!searchIndex.exists) {
           this._sync()
-        } else {
-          this._sync()
         }
 
         this.setState({ loading: false, searchIndex })
