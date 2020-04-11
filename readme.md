@@ -53,22 +53,24 @@ These headers include:
 
 The embedded webapp can be viewed from the [dashboard](https://twitter-search.io) and is a standard Create React App written in JavaScript. It's embedded in an iframe within Saasify's auto-generated host SPA which informs the webapp of the details for the authenticated user via a small JS script called [saasify-sdk](https://github.com/saasify-sh/saasify/tree/master/packages/saasify-sdk).
 
+The React webapp also uses [Chakra UI](https://chakra-ui.com) as a beautiful and lightweight component library.
+
 Of course, this product's core feature set wouldn't be possible without [Algolia](https://www.algolia.com/) powering the search and [ZEIT](https://zeit.co) hosting the serverless API and embedded static webapp.
 
 #### Looking to the future
 
-This may sound a bit complicated and it's definitely not as simple as we'd like at the moment. Even so, we hope this open source product shows the potential of the platform we're building.
+The way this product was built may sound a bit complicated and it's definitely not as simple as we'd like at the moment. Even so, we hope it provides a great example of the potential for the platform we're building.
 
-Our team is working very hard to improve the developer experience [open source core](https://github.com/saasify-sh/saasify) that Saasify provides, and we hope to make this type of integration much simpler in the coming months.
+Our team is working very hard to improve the developer experience that Saasify provides, and we hope to make this type of integration much simpler in the coming months. Feel free to follow our progress via our [open source repo](https://github.com/saasify-sh/saasify).
 
 Some of the related roadmap items that I'm particularly excited about include:
 
-- A visual template editor that mirrors the Saasify CLI's functionality.
+- A **visual template editor** that mirrors the Saasify CLI's functionality.
 - The ability to **eject** from our hosted SaaS boilerplate and fully customize your product.
-- Breaking out the current monolithic React frontend into embeddable blocks that you can use with any website or framework.
-- Continuing to build a strong community of successful Indie SaaS makers who have used Saasify to get their ideas to market.
+- Breaking out the current monolithic React frontend into **embeddable blocks** that you can use with any website or framework.
+- Continuing to **build a strong community** of successful Indie SaaS makers who have used Saasify to get their ideas to market.
 
-If you want to learn more about how Saasify works and experiment with rapidly launching your own SaaS products, check out the [docs](https://docs.saasify.sh) and feel free to [reach out](https://docs.saasify.sh/#/support).
+If you want to learn more about how Saasify works and experiment with rapidly launching your own SaaS products, check out our [docs](https://docs.saasify.sh) and feel free to [get in touch](https://docs.saasify.sh/#/support).
 
 ## License
 
