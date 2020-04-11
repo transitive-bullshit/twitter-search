@@ -37,7 +37,7 @@ The only reason it was possible to build a production SaaS MVP this quickly was 
 - Monitoring
 - Lots of glue and book-keeping
 
-All of these features have been auto-generated via this simple [saasify.json](https://github.com/saasify-sh/twitter-search/blob/master/saasify.json) config file.
+All of this functionality and most of the UI was auto-generated from this simple [saasify.json](https://github.com/saasify-sh/twitter-search/blob/master/saasify.json) config file.
 
 The key to Saasify's power is that it handles all of this SaaS boilerplate for you, allowing you to focus solely on your product's **unique value proposition**.
 
