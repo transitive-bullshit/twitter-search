@@ -1,0 +1,47 @@
+{
+  "name": "twitter-search",
+  "openapi": "./dist/swagger.json",
+  "saas": {
+    "name": "Twitter Search",
+    "heading": "Better Twitter Search",
+    "subheading": "Algolia search for your personal and favorited tweets.",
+    "repo": "https://github.com/saasify-sh/twitter-search",
+    "sections": {
+      "pricing": {
+        "showMeteredBilling": false
+      },
+      "hero": {
+        "cta": "Get started for free"
+      },
+      "demo": false
+    },
+    "webapp": {
+      "url": "https://twitter-search-webapp.now.sh",
+      "devUrl": "http://localhost:7000"
+    }
+  },
+  "authProviders": {
+    "twitter": {
+      "enabled": true
+    },
+    "github": {
+      "enabled": false
+    },
+    "default": {
+      "enabled": false
+    }
+  },
+  "pricingPlans": [
+    {
+      "name": "Free",
+      "rateLimit": null,
+      "features": ["Free 7-day trial"]
+    },
+    {
+      "name": "Pro",
+      "amount": 499,
+      "rateLimit": null,
+      "features": ["Full Algolia search for your personal and liked tweets"]
+    }
+  ]
+}
