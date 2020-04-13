@@ -39,9 +39,9 @@ The only reason it was possible to build a production-quality SaaS MVP this quic
 
 All of this functionality and most of the UI was auto-generated from this simple [saasify.json](https://github.com/saasify-sh/twitter-search/blob/master/saasify.json) config file.
 
-The key to Saasify's power is that it handles all of this SaaS boilerplate for you, allowing you to focus solely on your product's **unique value proposition**.
+The key is that Saasify handles all of this boilerplate for you, allowing you to focus solely on your product's **unique value proposition**.
 
-#### Implementation
+### Implementation
 
 [Twitter Search's](https://twitter-search.io) unique value prop comes in the form of two pieces: a REST API that handles the core functionality ([src/](./src)) and a webapp for the UI ([web/](./web)).
 
@@ -59,7 +59,7 @@ The React webapp also uses [Chakra UI](https://chakra-ui.com) as a beautiful and
 
 Of course, this product's core feature set wouldn't be possible without [Algolia](https://www.algolia.com/) powering the search and [ZEIT](https://zeit.co) hosting the serverless API and embedded static webapp.
 
-#### Looking to the future
+### Looking to the future
 
 The way this product was built may sound a bit complicated and it's definitely not as simple as we'd like at the moment. Even so, we hope it provides a good example of Saasify's potential to help developers quickly get their ideas off the ground.
 
@@ -67,7 +67,7 @@ Our team is working very hard to improve the developer experience that Saasify p
 
 Some of the related roadmap items that I'm particularly excited about include:
 
-- A **visual template editor** that mirrors the Saasify CLI's functionality.
+- A **visual template editor** that simplifies onboarding ala Shopify.
 - The ability to **eject** from our hosted SaaS boilerplate and fully customize your product.
 - Breaking out the current monolithic React frontend into **embeddable blocks** that you can use with any website or framework.
 - Continuing to **build a strong community** of successful Indie SaaS makers who have used Saasify to get their ideas to market.
