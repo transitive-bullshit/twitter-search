@@ -8,7 +8,7 @@
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject",
     "deploy": "now --prod",
-    "postdeploy": "now rm --safe --yes twitter-search-webapp"
+    "postdeploy": "now rm --safe --yes twitter-search-web"
   },
   "dependencies": {
     "@chakra-ui/core": "^0.7.0",
