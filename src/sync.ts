@@ -15,20 +15,47 @@ export async function syncAccount(
   await configureIndex(index)
 
   const user = await twitterClient.get('account/verify_credentials')
+  const opts: any = {}
 
-  const [statuses, favorites] = await Promise.all([
-    resolvePagedTwitterQuery(twitterClient, 'statuses/user_timeline', plan, {
-      include_rts: true
-    }),
-    resolvePagedTwitterQuery(twitterClient, 'favorites/list', plan)
+  // query most recent tweets in the index to support partial re-indexing
+  const resultSet = await index.search('', { offset: 0, length: MAX_PAGE_SIZE })
+  const latest: any = resultSet.hits[resultSet.hits.length - 1]
+  if (latest) {
+    opts.since_id = latest.id_str
+  }
+  // console.log(resultSet)
+  console.log('sync', opts)
+
+  const handlePage = async (results: object[]) => {
+    const algoliaObjects = tweetsToAlgoliaObjects(results, user)
+    await index.saveObjects(algoliaObjects)
+  }
+
+  const [numStatuses, numFavorites] = await Promise.all([
+    resolvePagedTwitterQuery(
+      twitterClient,
+      'statuses/user_timeline',
+      plan,
+      {
+        include_rts: true,
+        ...opts
+      },
+      handlePage
+    ),
+    resolvePagedTwitterQuery(
+      twitterClient,
+      'favorites/list',
+      plan,
+      opts,
+      handlePage
+    )
   ])
 
-  console.log('statuses', statuses.length, 'favorites', favorites.length)
-
-  const tweets = statuses.concat(favorites)
-
-  const algoliaObjects = tweetsToAlgoliaObjects(tweets, user)
-  return index.saveObjects(algoliaObjects)
+  console.log('statuses', numStatuses, 'favorites', numFavorites)
+  return {
+    numStatuses,
+    numFavorites
+  }
 }
 
 export async function getIndex(userId: string) {
@@ -67,6 +94,7 @@ export async function configureIndex(index: algolia.SearchIndex) {
       'retweet_count',
       'favorite_count',
       'total_count',
+      'user',
       'user.name',
       'user.screen_name',
       'user.profile_image_url'
@@ -81,9 +109,10 @@ async function resolvePagedTwitterQuery(
   twitterClient,
   endpoint: string,
   plan: string,
-  opts?: any
-) {
-  let results = []
+  opts: any,
+  handlePage: (results: object[]) => Promise<void>
+): Promise<number> {
+  let numResults = 0
   let max_id = undefined
   let page = 0
 
@@ -103,12 +132,10 @@ async function resolvePagedTwitterQuery(
         endpoint,
         params
       )
-
-      console.log({ pageResults: pageResults.length })
     } catch (err) {
-      console.error('twitter error', { endpoint, page }, err)
+      console.error('twitter error', { endpoint, page, numResults }, err)
 
-      if (results.length <= 0) {
+      if (numResults <= 0) {
         throw err
       }
     }
@@ -122,15 +149,17 @@ async function resolvePagedTwitterQuery(
     }
 
     max_id = pageResults[pageResults.length - 1].id_str
-    results = results.concat(pageResults)
+    numResults += pageResults.length
 
     console.log(
       'twitter',
       endpoint,
-      `page=${page} size=${pageResults.length} total=${results.length}`
+      `page=${page} size=${pageResults.length} total=${numResults}`
     )
 
-    if (results.length > MAX_RESULTS) {
+    await handlePage(pageResults)
+
+    if (numResults > MAX_RESULTS) {
       break
     }
 
@@ -141,7 +170,7 @@ async function resolvePagedTwitterQuery(
     ++page
   } while (true)
 
-  return results
+  return numResults
 }
 
 async function resolveTwitterQueryPage(
@@ -160,15 +189,16 @@ async function resolveTwitterQueryPage(
 function tweetsToAlgoliaObjects(tweets, user) {
   const algoliaObjects = []
 
-  // iterate over tweets and build the algolia record
+  // iterate over tweets and build the corresponding algolia records
   for (var i = 0; i < tweets.length; i++) {
     const tweet = tweets[i]
     const { text } = tweet
 
     // console.log(JSON.stringify(tweet, null, 2))
 
-    // remove emojis, as they might not display correctly
-    // remove urls, as we don't want to search nor display them
+    // remove emojis, as they may interfere with algolia's search
+    // remove urls, as we don't want to search them
+    // TODO: are these assumptions still valid?
     const cleanText = text.replace(emojiRegex, '').replace(urlRegex, '')
 
     // create the record that will be sent to algolia if there is text to index

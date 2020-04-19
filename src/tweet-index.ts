@@ -30,10 +30,6 @@ export class TweetIndexController extends Controller {
   ): Promise<TweetIndex> {
     console.log('syncTweetIndex', { userId })
 
-    // TODO: support full vs partial sync so we don't have to perform a full
-    // sync of your entire twitter history every time
-    // TODO: index batches as we go so user can start searching quickly
-
     const index = await sync.getIndex(userId)
 
     const twitterClient = await twitter.getTwitterClient({
