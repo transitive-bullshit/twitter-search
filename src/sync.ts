@@ -23,8 +23,7 @@ export async function syncAccount(
   if (latest) {
     opts.since_id = latest.id_str
   }
-  // console.log(resultSet)
-  console.log('sync', opts)
+  console.log('sync twitter user', user.id_str, opts)
 
   const handlePage = async (results: object[]) => {
     const algoliaObjects = tweetsToAlgoliaObjects(results, user)

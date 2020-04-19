@@ -31,7 +31,6 @@ export class App extends React.Component {
 
   render() {
     const { status, loading, syncing, searchIndex, error } = this.state
-    console.log({ searchIndex })
 
     const isFree = sdk.consumer?.plan === 'free'
 
@@ -60,8 +59,8 @@ export class App extends React.Component {
                 </p>
               ) : (
                 <p>
-                  This may take a few minutes as we index your entire Twitter
-                  history.
+                  Your Twitter history will continue syncing automatically in
+                  the background.
                 </p>
               )}
             </>
@@ -119,24 +118,42 @@ export class App extends React.Component {
   _sync = (opts = {}) => {
     this.setState({ loading: true, syncing: true })
 
+    const onDone = (searchIndex = this.state.searchIndex) => {
+      this.setState({
+        status: 'ready',
+        loading: false,
+        syncing: false,
+        searchIndex
+      })
+    }
+
+    let timeout = null
+    if (!opts.first && this.state.status !== 'error') {
+      timeout = setTimeout(onDone, 8000)
+    }
+
     sdk.api
       .put('/')
       .then(({ body: searchIndex }) => {
         console.log({ searchIndex })
+        if (timeout) {
+          clearTimeout(timeout)
+          timeout = null
+        }
 
         if (opts.first) {
-          setTimeout(() => {
-            this.setState({
-              status: 'ready',
-              loading: false,
-              syncing: false,
-              searchIndex
-            })
-          }, 3000)
+          timeout = setTimeout(() => onDone(searchIndex), 3000)
+        } else {
+          onDone(searchIndex)
         }
       })
       .catch((err) => {
         console.error(err)
+
+        if (timeout) {
+          clearTimeout(timeout)
+          timeout = null
+        }
 
         this.setState({
           status: 'error',
