@@ -9230,10 +9230,10 @@ react-error-overlay@^6.0.7:
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-6.0.7.tgz#1dcfb459ab671d53f660a991513cb2f0a0553108"
   integrity sha512-TAv1KJFh3RhqxNvhzxj6LeT5NWklP6rDr2a0jaTfsZ5wSZWHOGeqQyejUp3xxLfPt2UpyJEcVQB/zyPcmonNFA==
 
-react-fake-tweet@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/react-fake-tweet/-/react-fake-tweet-1.0.2.tgz#b9ccdb6ce5396dce63ee8af6b0a2c7ed8bed442f"
-  integrity sha512-7zBBC9WNoVCQWoz2vAMsRaDAZrpCkpV3VrJszvc/tertFH9AVlOk7a7ruflnnneXeqruWnbcO3KxTJfnXAAUlg==
+react-fake-tweet@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/react-fake-tweet/-/react-fake-tweet-1.0.4.tgz#9f80111501756f1be996cd8d1d4674c890cd3e9b"
+  integrity sha512-DKYnz2ubPVuXZ08UQn164MDVnbOlAGrla9NK8Ko0RQp3ByUs5rWvp78trWdUsp8BhmVV4cem2xEmymr4RFTxSg==
   dependencies:
     classnames "^2.2.6"
     dayjs "^1.8.24"

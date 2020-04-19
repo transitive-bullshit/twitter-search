@@ -20,7 +20,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-fake-tweet": "^1.0.2",
+    "react-fake-tweet": "^1.0.4",
     "react-instantsearch-dom": "^6.4.0",
     "react-masonry-css": "^1.0.14",
     "saasify-sdk": "^1.18.11"
