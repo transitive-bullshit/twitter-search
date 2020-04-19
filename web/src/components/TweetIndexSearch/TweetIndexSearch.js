@@ -1,7 +1,8 @@
 import React from 'react'
 
 import Masonry from 'react-masonry-css'
-import TweetEmbed from 'react-tweet-embed'
+import { Tweet } from 'react-fake-tweet'
+import 'react-fake-tweet/dist/index.css'
 
 import {
   InstantSearch,
@@ -100,7 +101,7 @@ const InfiniteHitsImpl = ({ hits, hasMore, refineNext }) => (
       columnClassName={styles.hitsColumn}
     >
       {hits.map((hit) => (
-        <Tweet key={hit.objectID} hit={hit} />
+        <Hit key={hit.objectID} hit={hit} />
       ))}
     </Masonry>
 
@@ -159,16 +160,40 @@ const MenuImpl = ({ attribute, items, currentRefinement, refine }) => (
 
 const Menu = connectMenu(MenuImpl)
 
-export class Tweet extends React.Component {
+// export class Tweet extends React.Component {
+//   render() {
+//     const { hit, ...rest } = this.props
+
+//     return (
+//       <TweetEmbed
+//         className={styles.hit}
+//         id={hit.id_str}
+//         options={{ cards: 'hidden' }}
+//         {...rest}
+//       />
+//     )
+//   }
+// }
+
+export class Hit extends React.Component {
   render() {
     const { hit, ...rest } = this.props
 
     return (
-      <TweetEmbed
+      <Tweet
         className={styles.hit}
-        id={hit.id_str}
-        options={{ cards: 'hidden' }}
         {...rest}
+        config={{
+          user: {
+            avatar: hit.user.profile_image_url,
+            nickname: hit.user.screen_name,
+            name: hit.user.name
+          },
+          text: hit.text,
+          date: new Date(hit.created_at * 1000),
+          retweets: hit.retweet_count,
+          likes: hit.favorite_count
+        }}
       />
     )
   }
