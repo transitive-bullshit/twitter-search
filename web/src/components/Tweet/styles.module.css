@@ -72,3 +72,7 @@
     #fff
   );
 }
+
+/* div[role='tooltip'][x-placement^='right'] { */
+/* max-width: auto !important; */
+/* } */

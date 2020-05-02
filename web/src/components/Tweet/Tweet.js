@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import processString from 'react-process-string'
 import BlockImage from 'react-block-image'
+import TweetEmbed from 'react-tweet-embed'
 import cs from 'classnames'
 import qs from 'qs'
 
@@ -85,7 +86,7 @@ export function Tweet(props) {
           }
         },
         {
-          regex: /<ais-highlight-0000000000>(.*)<\/ais-highlight-0000000000>/,
+          regex: /<ais-highlight-0000000000>([^<]*)<\/ais-highlight-0000000000>/gm,
           fn: (key, result) => {
             console.log({ key, result })
             return (
@@ -101,41 +102,44 @@ export function Tweet(props) {
   }, [config.text])
 
   return (
-    <a
-      className={cs(styles.tweet, className)}
-      {...rest}
-      href={`https://twitter.com/${config.user.nickname}/status/${config.id_str}`}
-      target='_blank'
+    <Tooltip
+      placement='bottom'
+      label={<TweetEmbed id={config.id_str} options={{ cards: 'hidden' }} />}
     >
-      <div className={styles.lhs}>
-        <Tooltip
-          placement='top'
-          hasArrow={true}
-          label={
-            <span>
-              {config.user.name} (@{config.user.nickname})
-            </span>
-          }
-        >
-          <a
-            href={`https://twitter.com/${config.user.nickname}`}
-            target='_blank'
+      <a
+        className={cs(styles.tweet, className)}
+        {...rest}
+        href={`https://twitter.com/${config.user.nickname}/status/${config.id_str}`}
+        target='_blank'
+      >
+        <div className={styles.lhs}>
+          <Tooltip
+            placement='top'
+            hasArrow={true}
+            label={
+              <span>
+                {config.user.name} (@{config.user.nickname})
+              </span>
+            }
           >
-            <BlockImage
-              className={styles.avatar}
-              src={config.user.avatar}
-              fallback={defaultAvatar}
-              alt={config.user.name}
-            />
-          </a>
-        </Tooltip>
-      </div>
+            <a
+              href={`https://twitter.com/${config.user.nickname}`}
+              target='_blank'
+            >
+              <BlockImage
+                className={styles.avatar}
+                src={config.user.avatar}
+                fallback={defaultAvatar}
+                alt={config.user.name}
+              />
+            </a>
+          </Tooltip>
+        </div>
 
-      <div className={styles.main}>
-        <div className={styles.body}>{text}</div>
-
-        <div className={styles.footer}></div>
-      </div>
-    </a>
+        <div className={styles.main}>
+          <div className={styles.body}>{text}</div>
+        </div>
+      </a>
+    </Tooltip>
   )
 }

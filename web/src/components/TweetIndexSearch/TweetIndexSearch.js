@@ -50,7 +50,7 @@ export class TweetIndexSearch extends React.Component {
     return (
       <SearchConfig.Provider value={{ resultsFormat }}>
         <InstantSearch indexName={indexName} searchClient={searchClient}>
-          <Configure hitsPerPage={64} />
+          <Configure hitsPerPage={20} />
 
           <SearchBox showLoadingIndicator />
 
@@ -101,7 +101,7 @@ const SearchBoxImpl = ({ currentRefinement, isSearchStalled, refine }) => (
       <InputLeftElement children={<Icon name='search' color='gray.300' />} />
 
       <Input
-        placeholder='Search your tweet history'
+        placeholder='Search your twitter history'
         aria-label='Tweet Search'
         type='search'
         variant='outline'
