@@ -1,8 +1,7 @@
 import pRetry = require('p-retry')
 import * as algolia from './algolia'
 
-const emojiRegex = require('emoji-regex')()
-const urlRegex = /(?:https?|ftp):\/\/[\n\S]+/g
+const isProd = process.env.NODE_ENV === 'production'
 
 const MAX_PAGE_SIZE = 200
 const MAX_RESULTS = 20000
@@ -10,7 +9,8 @@ const MAX_RESULTS = 20000
 export async function syncAccount(
   twitterClient: any,
   index: algolia.SearchIndex,
-  plan: string = 'free'
+  plan: string = 'free',
+  full: boolean = false
 ) {
   await configureIndex(index)
 
@@ -18,15 +18,26 @@ export async function syncAccount(
   const opts: any = {}
 
   // query most recent tweets in the index to support partial re-indexing
-  const resultSet = await index.search('', { offset: 0, length: MAX_PAGE_SIZE })
-  const latest: any = resultSet.hits[resultSet.hits.length - 1]
-  if (latest) {
-    opts.since_id = latest.id_str
+  if (!full) {
+    const resultSet = await index.search('', {
+      offset: 0,
+      length: MAX_PAGE_SIZE
+    })
+    const latest: any = resultSet.hits[resultSet.hits.length - 1]
+    if (latest) {
+      opts.since_id = latest.id_str
+    }
   }
   console.log('sync twitter user', user.id_str, opts)
 
-  const handlePage = async (results: object[]) => {
+  const handlePage = async (results: any[]) => {
     const algoliaObjects = tweetsToAlgoliaObjects(results, user)
+
+    // const id = '1255522888834318339'
+    // const tweet = results.find((t) => t.id_str === id)
+    // const obj = algoliaObjects.find((t) => t.id_str === id)
+    // console.debug(tweet, obj)
+
     await index.saveObjects(algoliaObjects)
   }
 
@@ -63,7 +74,6 @@ export async function getIndex(userId: string) {
 
 export async function configureIndex(index: algolia.SearchIndex) {
   await index.setSettings({
-    // only the text of the tweet should be searchable
     searchableAttributes: ['text', 'user.name,user.screen_name'],
 
     // only highlight results in the text field
@@ -118,7 +128,7 @@ async function resolvePagedTwitterQuery(
   const count = plan === 'free' ? 100 : MAX_PAGE_SIZE
 
   do {
-    const params = { count, ...opts }
+    const params = { count, tweet_mode: 'extended', ...opts }
     if (max_id) {
       params.max_id = max_id
     }
@@ -162,7 +172,7 @@ async function resolvePagedTwitterQuery(
       break
     }
 
-    if (plan === 'free') {
+    if (plan === 'free' && isProd) {
       break
     }
 
@@ -191,41 +201,33 @@ function tweetsToAlgoliaObjects(tweets, user) {
   // iterate over tweets and build the corresponding algolia records
   for (var i = 0; i < tweets.length; i++) {
     const tweet = tweets[i]
-    const { text } = tweet
-
-    // console.log(JSON.stringify(tweet, null, 2))
-
-    // remove emojis, as they may interfere with algolia's search
-    // remove urls, as we don't want to search them
-    // TODO: are these assumptions still valid?
-    const cleanText = text.replace(emojiRegex, '').replace(urlRegex, '')
 
     // create the record that will be sent to algolia if there is text to index
-    if (cleanText.trim().length > 0) {
-      const algoliaObject = {
-        // use id_str not id (an int), as this int gets truncated in JS
-        // the objectID is the key for the algolia record, and mapping
-        // tweet id to object ID guarantees only one copy of the tweet in algolia
-        objectID: tweet.id_str,
-        id_str: tweet.id_str,
-        text: cleanText,
-        created_at: Date.parse(tweet.created_at) / 1000,
-        favorite_count: tweet.favorite_count,
-        retweet_count: tweet.retweet_count,
-        total_count: tweet.retweet_count + tweet.favorite_count,
-        is_retweet: !!tweet.retweeted_status,
-        is_favorite: !!tweet.favorited && user.id_str !== tweet.user.id_str,
-        user: {
-          id_str: tweet.user.id_str,
-          name: tweet.user.name,
-          screen_name: tweet.user.screen_name,
-          profile_image_url: tweet.user.profile_image_url
-        }
+    const algoliaObject = {
+      // use id_str not id (an int), as this int gets truncated in JS
+      // the objectID is the key for the algolia record, and mapping
+      // tweet id to object ID guarantees only one copy of the tweet in algolia
+      objectID: tweet.id_str,
+      id_str: tweet.id_str,
+      text: tweet.full_text || tweet.text || '',
+      created_at: Date.parse(tweet.created_at) / 1000,
+      favorite_count: tweet.favorite_count,
+      retweet_count: tweet.retweet_count,
+      total_count: tweet.retweet_count + tweet.favorite_count,
+      is_retweet: !!tweet.retweeted_status,
+      is_favorite: !!tweet.favorited && user.id_str !== tweet.user.id_str,
+      user: {
+        id_str: tweet.user.id_str,
+        name: tweet.user.name,
+        screen_name: tweet.user.screen_name,
+        profile_image_url: tweet.user.profile_image_url
       }
-
-      algoliaObjects.push(algoliaObject)
-      console.log(JSON.stringify(algoliaObject, null, 2))
     }
+
+    algoliaObjects.push(algoliaObject)
+
+    // console.log(JSON.stringify(tweet, null, 2))
+    // console.log(JSON.stringify(algoliaObject, null, 2))
   }
 
   return algoliaObjects

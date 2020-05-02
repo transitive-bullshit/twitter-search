@@ -37,7 +37,7 @@ export class TweetIndexController extends Controller {
       accessTokenSecret: twitterAccessTokenSecret
     })
 
-    await sync.syncAccount(twitterClient, index, plan)
+    await sync.syncAccount(twitterClient, index, plan, true)
 
     return {
       indexName: index.indexName,

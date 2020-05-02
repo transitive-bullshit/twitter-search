@@ -19,14 +19,20 @@
 
 .select {
   flex: 1;
-  width: auto;
+  width: auto !important;
   margin-right: 5%;
+}
+
+.resultsFormat {
+  width: auto !important;
+  margin-left: 5%;
 }
 
 .infiniteHits {
   width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .hits {
@@ -52,13 +58,14 @@
   margin: 0 !important;
 }
 
+.standard .hit > twitter-widget {
+  width: 520px !important;
+}
+
+.compact .hit {
+  margin-bottom: 0;
+}
+
 .loadMoreButton {
   align-self: center;
 }
-
-/* .hits {
-  display: grid;
-  grid-gap: 1em;
-  grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
-  justify-items: center;
-} */
