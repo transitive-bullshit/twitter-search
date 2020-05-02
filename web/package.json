@@ -26,6 +26,7 @@
     "react-instantsearch-dom": "^6.4.0",
     "react-masonry-css": "^1.0.14",
     "react-process-string": "^1.2.0",
+    "react-simple-infinite-scroll": "^0.0.1",
     "react-tweet-embed": "^1.2.2",
     "saasify-sdk": "^1.18.11",
     "twemoji": "^12.1.6"

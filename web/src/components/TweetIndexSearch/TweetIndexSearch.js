@@ -1,6 +1,7 @@
 import React from 'react'
 import Masonry from 'react-masonry-css'
 import TweetEmbed from 'react-tweet-embed'
+import { InfiniteScroll } from 'react-simple-infinite-scroll'
 import cs from 'classnames'
 
 import {
@@ -128,25 +129,24 @@ const InfiniteHitsImpl = ({ hits, hasMore, refineNext }) => {
     <SearchConfig.Consumer>
       {(config) => (
         <div className={cs(styles.infiniteHits, styles[config.resultsFormat])}>
-          {config.resultsFormat === 'grid' ? (
-            <Masonry
-              className={styles.hits}
-              breakpointCols={2}
-              columnClassName={styles.hitsColumn}
-            >
-              {body}
-            </Masonry>
-          ) : (
-            body
-          )}
-
-          <Button
-            className={styles.loadMoreButton}
-            isDisabled={!hasMore}
-            onClick={refineNext}
+          <InfiniteScroll
+            throttle={250}
+            threshold={300}
+            hasMore={hasMore}
+            onLoadMore={refineNext}
           >
-            Load more
-          </Button>
+            {config.resultsFormat === 'grid' ? (
+              <Masonry
+                className={styles.hits}
+                breakpointCols={2}
+                columnClassName={styles.hitsColumn}
+              >
+                {body}
+              </Masonry>
+            ) : (
+              body
+            )}
+          </InfiniteScroll>
         </div>
       )}
     </SearchConfig.Consumer>
