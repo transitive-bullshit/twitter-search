@@ -10,11 +10,11 @@ import {
   connectInfiniteHits,
   connectSearchBox,
   connectToggleRefinement,
-  connectMenu
+  connectMenu,
+  connectStats
 } from 'react-instantsearch-dom'
 
 import {
-  Button,
   Flex,
   FormLabel,
   Icon,
@@ -85,6 +85,8 @@ export class TweetIndexSearch extends React.Component {
             </Select>
           </div>
 
+          <Stats />
+
           <InfiniteHits />
         </InstantSearch>
       </SearchConfig.Provider>
@@ -121,6 +123,14 @@ const SearchBoxImpl = ({ currentRefinement, isSearchStalled, refine }) => (
 )
 
 const SearchBox = connectSearchBox(SearchBoxImpl)
+
+const StatsImpl = ({ processingTimeMS, nbHits }) => (
+  <p className={styles.stats}>
+    Found {nbHits} tweets in {processingTimeMS} ms
+  </p>
+)
+
+const Stats = connectStats(StatsImpl)
 
 const InfiniteHitsImpl = ({ hits, hasMore, refineNext }) => {
   const body = hits.map((hit) => <Hit key={hit.objectID} hit={hit} />)
