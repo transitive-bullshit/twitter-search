@@ -128,7 +128,7 @@ export function Tweet(props) {
             >
               <BlockImage
                 className={styles.avatar}
-                src={config.user.avatar}
+                src={config.user.avatar.replace('http://', 'https://')}
                 fallback={defaultAvatar}
                 alt={config.user.name}
               />
