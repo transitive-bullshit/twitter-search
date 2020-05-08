@@ -12,6 +12,7 @@
 }
 
 .tweet:hover {
+  cursor: pointer;
   background: #efefef;
 }
 

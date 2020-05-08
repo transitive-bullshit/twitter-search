@@ -42,6 +42,10 @@
   overflow: hidden;
 }
 
+.loadMore {
+  margin: 1em 0;
+}
+
 .hits {
   display: flex;
   width: auto;
@@ -65,7 +69,7 @@
   margin: 0 !important;
 }
 
-.standard .hit > twitter-widget {
+.list .hit > twitter-widget {
   width: 520px !important;
 }
 
@@ -76,4 +80,19 @@
 .loadMoreButton {
   margin-top: 1em;
   align-self: center;
+}
+
+.results {
+  position: relative;
+}
+
+.focusedTweet {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }

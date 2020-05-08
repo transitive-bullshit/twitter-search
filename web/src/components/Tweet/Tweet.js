@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import processString from 'react-process-string'
 import BlockImage from 'react-block-image'
 import TweetEmbed from 'react-tweet-embed'
 import cs from 'classnames'
 import qs from 'qs'
 
-import { Tooltip } from '@chakra-ui/core'
+import { Tooltip, Select } from '@chakra-ui/core'
 
 import defaultAvatar from './default-avatar.png'
 import Twemoji from './Twemoji'
 import styles from './styles.module.css'
 
 export function Tweet(props) {
-  const { config = {}, className, ...rest } = props
+  const { config = {}, className, onFocusTweet, ...rest } = props
   const [text, setText] = useState(config.text)
 
   useEffect(() => {
@@ -101,45 +101,52 @@ export function Tweet(props) {
     )
   }, [config.text])
 
-  return (
-    <Tooltip
-      placement='bottom'
-      label={<TweetEmbed id={config.id_str} options={{ cards: 'hidden' }} />}
-    >
-      <a
-        className={cs(styles.tweet, className)}
-        {...rest}
-        href={`https://twitter.com/${config.user.nickname}/status/${config.id_str}`}
-        target='_blank'
-      >
-        <div className={styles.lhs}>
-          <Tooltip
-            placement='top'
-            hasArrow={true}
-            label={
-              <span>
-                {config.user.name} (@{config.user.nickname})
-              </span>
-            }
-          >
-            <a
-              href={`https://twitter.com/${config.user.nickname}`}
-              target='_blank'
-            >
-              <BlockImage
-                className={styles.avatar}
-                src={config.user.avatar.replace('http://', 'https://')}
-                fallback={defaultAvatar}
-                alt={config.user.name}
-              />
-            </a>
-          </Tooltip>
-        </div>
+  const onClickTweet = useCallback(
+    (event) => {
+      event.stopPropagation()
+      const url = `https://twitter.com/${config.user.nickname}/status/${config.id_str}`
+      const win = window.open(url, '_blank')
+      win.focus()
+    },
+    [config.user.nickname, config.id_str]
+  )
 
-        <div className={styles.main}>
-          <div className={styles.body}>{text}</div>
-        </div>
-      </a>
-    </Tooltip>
+  return (
+    <div
+      className={cs(styles.tweet, className)}
+      onMouseEnter={() => onFocusTweet(config.id_str)}
+      onMouseMove={() => onFocusTweet(config.id_str)}
+      onMouseLeave={() => onFocusTweet(null)}
+      onClick={onClickTweet}
+      {...rest}
+    >
+      <div className={styles.lhs}>
+        <Tooltip
+          placement='top'
+          hasArrow={true}
+          label={
+            <span>
+              {config.user.name} (@{config.user.nickname})
+            </span>
+          }
+        >
+          <a
+            href={`https://twitter.com/${config.user.nickname}`}
+            target='_blank'
+          >
+            <BlockImage
+              className={styles.avatar}
+              src={config.user.avatar.replace('http://', 'https://')}
+              fallback={defaultAvatar}
+              alt={config.user.name}
+            />
+          </a>
+        </Tooltip>
+      </div>
+
+      <div className={styles.main}>
+        <div className={styles.body}>{text}</div>
+      </div>
+    </div>
   )
 }

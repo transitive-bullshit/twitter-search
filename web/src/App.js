@@ -59,8 +59,7 @@ export class App extends React.Component {
                 </p>
               ) : (
                 <p>
-                  Your Twitter history will continue syncing automatically in
-                  the background.
+                  Your twitter history will continue syncing in the background.
                 </p>
               )}
             </>

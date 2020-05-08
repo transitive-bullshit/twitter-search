@@ -1,7 +1,7 @@
 import React from 'react'
 import Masonry from 'react-masonry-css'
 import TweetEmbed from 'react-tweet-embed'
-import { InfiniteScroll } from 'react-simple-infinite-scroll'
+// import { InfiniteScroll } from 'react-simple-infinite-scroll'
 import cs from 'classnames'
 
 import {
@@ -15,6 +15,7 @@ import {
 } from 'react-instantsearch-dom'
 
 import {
+  Button,
   Flex,
   FormLabel,
   Icon,
@@ -41,15 +42,18 @@ const SearchConfig = React.createContext()
 
 export class TweetIndexSearch extends React.Component {
   state = {
-    resultsFormat: 'compact'
+    resultsFormat: 'compact',
+    focusedTweet: null
   }
 
   render() {
     const { indexName } = this.props
-    const { resultsFormat } = this.state
+    const { resultsFormat, focusedTweet } = this.state
 
     return (
-      <SearchConfig.Provider value={{ resultsFormat }}>
+      <SearchConfig.Provider
+        value={{ resultsFormat, onFocusTweet: this._onFocusTweet }}
+      >
         <InstantSearch indexName={indexName} searchClient={searchClient}>
           <Configure hitsPerPage={20} />
 
@@ -79,7 +83,7 @@ export class TweetIndexSearch extends React.Component {
               value={resultsFormat}
               onChange={this._onChangeResultsFormat}
             >
-              <option value='standard'>Standard</option>
+              <option value='list'>List</option>
               <option value='grid'>Grid</option>
               <option value='compact'>Compact</option>
             </Select>
@@ -87,7 +91,15 @@ export class TweetIndexSearch extends React.Component {
 
           <Stats />
 
-          <InfiniteHits />
+          <div className={styles.results}>
+            {focusedTweet && (
+              <div key={focusedTweet} className={styles.focusedTweet}>
+                <TweetEmbed id={focusedTweet} options={{ cards: 'hidden' }} />
+              </div>
+            )}
+
+            <InfiniteHits />
+          </div>
         </InstantSearch>
       </SearchConfig.Provider>
     )
@@ -95,6 +107,10 @@ export class TweetIndexSearch extends React.Component {
 
   _onChangeResultsFormat = (event) => {
     this.setState({ resultsFormat: event.target.value })
+  }
+
+  _onFocusTweet = (tweetId) => {
+    this.setState({ focusedTweet: tweetId })
   }
 }
 
@@ -139,24 +155,32 @@ const InfiniteHitsImpl = ({ hits, hasMore, refineNext }) => {
     <SearchConfig.Consumer>
       {(config) => (
         <div className={cs(styles.infiniteHits, styles[config.resultsFormat])}>
-          <InfiniteScroll
+          {/* <InfiniteScroll
             throttle={250}
             threshold={300}
             hasMore={hasMore}
             onLoadMore={refineNext}
+          > */}
+          {config.resultsFormat === 'grid' ? (
+            <Masonry
+              className={styles.hits}
+              breakpointCols={2}
+              columnClassName={styles.hitsColumn}
+            >
+              {body}
+            </Masonry>
+          ) : (
+            body
+          )}
+          {/* </InfiniteScroll> */}
+
+          <Button
+            isDisabled={!hasMore}
+            onClick={refineNext}
+            className={styles.loadMore}
           >
-            {config.resultsFormat === 'grid' ? (
-              <Masonry
-                className={styles.hits}
-                breakpointCols={2}
-                columnClassName={styles.hitsColumn}
-              >
-                {body}
-              </Masonry>
-            ) : (
-              body
-            )}
-          </InfiniteScroll>
+            Load More
+          </Button>
         </div>
       )}
     </SearchConfig.Consumer>
@@ -220,6 +244,7 @@ export class Hit extends React.Component {
             <Tweet
               className={styles.hit}
               {...rest}
+              onFocusTweet={config.onFocusTweet}
               config={{
                 id_str: hit.id_str,
                 user: {
