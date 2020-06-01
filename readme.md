@@ -1,6 +1,6 @@
 # Twitter Search
 
-> Instantly search across your entire Twitter history with a beautiful UI powered by Algolia. ([link](https://twitter-search.io))
+> Instantly search across your entire Twitter history with a beautiful UI powered by Algolia.
 
 [![Build Status](https://travis-ci.com/saasify-sh/twitter-search.svg?branch=master)](https://travis-ci.com/saasify-sh/twitter-search) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
@@ -10,11 +10,17 @@
   </p>
 </a>
 
+---
+
+**NOTE: The hosted version of Twitter Search has unfortunately been disabled due to abuse and excessive Algolia costs.**
+
+The code will remain open source and hopefully still prove useful to other developers in the future.
+
+---
+
 ## Features
 
 - 💯 **Open source**
-- 🙈 [Hosted version](https://twitter-search.io) provided by [Saasify](https://saasify.sh)
-- 🙉 Self-hosted version is easy to set up
 - 🐳 Built using [Algolia](https://www.algolia.com), [Twitter API](https://developer.twitter.com/en/docs), and [ZEIT](https://zeit.co)
 - 💪 Scales pretty nicely via serverless magics
 - 🤖 Includes an auto-generated OpenAPI spec
