@@ -42,7 +42,12 @@ export class App extends React.Component {
 
         <p>
           You can still view the{' '}
-          <a href='https://github.com/saasify-sh/twitter-search'>source code</a>{' '}
+          <a
+            href='https://github.com/saasify-sh/twitter-search'
+            target='_blank'
+          >
+            source code
+          </a>{' '}
           on GitHub.
         </p>
       </Paper>
