@@ -7,6 +7,10 @@ const defaultHandler = (name) => (props, components) => {
 }
 
 function handleNode(node, components, i) {
+  if (!node) {
+    return null
+  }
+
   if (typeof node === 'string') {
     return node
   }
@@ -14,7 +18,7 @@ function handleNode(node, components, i) {
   const handler = handlers[node.tag] || defaultHandler(node.tag)
 
   if (!handler) {
-    console.error('Missing handler for:', node)
+    console.error('tweet error missing handler for:', node)
     return null
   }
 
@@ -25,9 +29,11 @@ function handleNode(node, components, i) {
   if (props.className && Array.isArray(props.className)) {
     props.className = props.className.join(' ')
   }
+
   if (node.data) {
     props.data = node.data
   }
+
   if (nodes && Array.isArray(nodes)) {
     props.children = nodes.map((node, i) => handleNode(node, components, i))
   }

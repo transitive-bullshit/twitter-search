@@ -9,7 +9,7 @@ import { Tooltip } from '@chakra-ui/core'
 import Twemoji from './Twemoji'
 import styles from './styles.module.css'
 
-export function Tweet(props) {
+export function InlineTweet(props) {
   const { config = {}, className, onFocusTweet, ...rest } = props
   const [text, setText] = React.useState(config.text)
 

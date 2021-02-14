@@ -3,6 +3,7 @@ import React from 'react'
 export const Div = (p) => (
   <div className={p.className}>
     {p.children}
+
     <style jsx>{`
       .image-container {
         display: grid;

@@ -54,8 +54,10 @@
     "remark-parse": "7",
     "remark-rehype": "^8.0.0",
     "styled-jsx": "^3.4.2",
+    "swr": "^0.4.2",
     "twemoji": "^12.1.6",
     "twitter-lite": "^1.1.0",
+    "unfetch": "^4.2.0",
     "unified": "8",
     "unist-util-visit": "^2.0.3"
   },

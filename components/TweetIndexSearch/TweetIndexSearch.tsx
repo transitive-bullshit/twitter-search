@@ -1,6 +1,7 @@
 import React from 'react'
 import Masonry from 'react-masonry-css'
-import TweetEmbed from 'react-tweet-embed'
+// import TweetEmbed from 'react-tweet-embed'
+import { Tweet } from '../tweet'
 import cs from 'classnames'
 // import { InfiniteScroll } from 'react-simple-infinite-scroll'
 
@@ -29,7 +30,7 @@ import {
 } from '@chakra-ui/core'
 
 import { searchClient } from 'lib/client/algolia'
-import { Tweet } from '../Tweet/Tweet'
+import { InlineTweet } from '../InlineTweet/InlineTweet'
 
 import styles from './styles.module.css'
 
@@ -94,7 +95,8 @@ export class TweetIndexSearch extends React.Component<any> {
           <div className={styles.results}>
             {focusedTweet && (
               <div key={focusedTweet} className={styles.focusedTweet}>
-                <TweetEmbed id={focusedTweet} options={{ cards: 'hidden' }} />
+                {/* <TweetEmbed id={focusedTweet} options={{ cards: 'hidden' }} /> */}
+                <Tweet id={focusedTweet} />
               </div>
             )}
 
@@ -246,7 +248,7 @@ export class Hit extends React.Component<any> {
 
     if (config.resultsFormat === 'compact') {
       return (
-        <Tweet
+        <InlineTweet
           className={styles.hit}
           {...rest}
           onFocusTweet={config.onFocusTweet}
@@ -266,15 +268,17 @@ export class Hit extends React.Component<any> {
       )
     } else {
       return (
-        <TweetEmbed
-          className={styles.hit}
-          id={hit.id_str}
-          {...rest}
-          options={{
-            cards: 'hidden',
-            width: config.resultsFormat === 'list' ? 550 : undefined
-          }}
-        />
+        // <TweetEmbed
+        //   className={styles.hit}
+        //   id={hit.id_str}
+        //   {...rest}
+        //   options={{
+        //     cards: 'hidden',
+        //     width: config.resultsFormat === 'list' ? 550 : undefined
+        //   }}
+        // />
+
+        <Tweet className={styles.hit} id={hit.id_str} {...rest} />
       )
     }
   }

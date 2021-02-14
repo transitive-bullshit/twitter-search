@@ -31,13 +31,12 @@ export default {
       return <components.Poll key={i} data={data} />
     }
 
-    const Div = components.div
     const className = getContainerClassName(type)
 
     return (
-      <Div key={i} className={className} data={data}>
+      <components.div key={i} className={className} data={data}>
         {props.children}
-      </Div>
+      </components.div>
     )
   },
 
@@ -47,7 +46,7 @@ export default {
     }
 
     if (dataType === 'media-image') {
-      return <components.Img key={i} {...props} />
+      return <components.img key={i} {...props} />
     }
 
     return null

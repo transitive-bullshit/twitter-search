@@ -1,7 +1,9 @@
 import React from 'react'
 import cs from 'classnames'
+import useSWR, { ConfigInterface } from 'swr'
+import fetch from 'unfetch'
 
-import { useTweet } from '../static-tweet/tweets'
+// import { useTweet } from '../static-tweet/tweets'
 import Node from '../static-tweet/components/html/node'
 import components from '../static-tweet/components/twitter-layout/components'
 import twitterTheme from '../static-tweet/components/twitter-layout/twitter.module.css'
@@ -11,17 +13,28 @@ export const Tweet: React.FC<{
   br?: string
   caption?: string
   className?: string
-}> = ({ id, br, caption, className }) => {
-  const tweet = useTweet(id)
+  swrOptions?: ConfigInterface<any, any>
+}> = ({ id, br, caption, className, swrOptions }) => {
+  const fetcher = (url) => fetch(url).then((r) => r.json())
+  const key = `/api/get-tweet-ast/${id}`
+  const { data: tweetAst } = useSWR(key, fetcher, swrOptions)
 
-  // Happens when `getStaticProps` is traversing the tree to collect the tweet ids
-  if (tweet.ignore) return null
+  console.log('tweetAst', id, tweetAst)
+
+  // const tweet = useTweet(id)
+
+  // // Happens when `getStaticProps` is traversing the tree to collect the tweet ids
+  // if (!tweet || tweet.ignore) return null
 
   return (
     <main className={cs(twitterTheme.theme, className)}>
-      <Node components={components} node={tweet.ast[0]} br={br} />
+      {tweetAst && (
+        <>
+          <Node components={components} node={tweetAst[0]} br={br} />
 
-      {caption != null ? <p>{caption}</p> : null}
+          {caption != null ? <p>{caption}</p> : null}
+        </>
+      )}
 
       <style jsx>{`
         main {
