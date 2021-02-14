@@ -4,7 +4,8 @@ import fetchTweetAst from 'static-tweet/lib/fetchTweetAst'
 import { Tweet } from 'components/tweet'
 
 // const tweetId = '1238918791947522049'
-const tweetId = '1358199505280262150'
+// const tweetId = '1358199505280262150'
+const tweetId = '1358581276576391172'
 
 export const getStaticProps = async () => {
   try {

@@ -13,7 +13,6 @@ export const Tweet: React.FC<{
   className?: string
 }> = ({ id, br, caption, className }) => {
   const tweet = useTweet(id)
-  console.log({ tweet })
 
   // Happens when `getStaticProps` is traversing the tree to collect the tweet ids
   if (tweet.ignore) return null

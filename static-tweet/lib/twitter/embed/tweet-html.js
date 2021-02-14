@@ -68,7 +68,11 @@ function getTweetContent($) {
       if (el.next().children().length) {
         el.after($('<br>'))
       }
-    } else if (!/\s$/.test(el.text()) && el.next().children().length) {
+    } else if (
+      !/\s$/.test(el.text()) &&
+      el.next().children().length &&
+      !/^#/.test(el.next().text())
+    ) {
       el.after($('<br>'))
     }
   })
