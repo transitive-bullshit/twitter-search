@@ -10,10 +10,11 @@ import twitterTheme from '../static-tweet/components/twitter-layout/twitter.modu
 export const Tweet: React.FC<{
   id: string
   ast?: any
-  br?: string
   caption?: string
   className?: string
-}> = ({ id, ast, br, caption, className }) => {
+  // TODO: understand what br is used for
+  // br?: string
+}> = ({ id, ast, caption, className }) => {
   const twitter = useTwitter()
   const { data: tweetAst } = useSWR(
     id,
@@ -25,7 +26,7 @@ export const Tweet: React.FC<{
     <main className={cs(twitterTheme.theme, className)}>
       {tweetAst && (
         <>
-          <Node components={components} node={tweetAst[0]} br={br} />
+          <Node components={components} node={tweetAst[0]} />
 
           {caption != null ? <p>{caption}</p> : null}
         </>
