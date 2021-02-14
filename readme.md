@@ -14,6 +14,8 @@
 
 **NOTE: The hosted version of Twitter Search has unfortunately been disabled due to abuse and excessive Algolia costs.**
 
+Also see https://github.com/twitter/twurl
+
 The code will remain open source and hopefully still prove useful to other developers in the future.
 
 ---
