@@ -74,6 +74,7 @@ async function getPollHtml(tweet, context) {
 export default async function getTweetHtml(tweet, context) {
   const meta = { ...tweet.meta, type: 'tweet' }
   const md = await markdownToAst(tweet.html)
+
   const html = [
     // md.children is the markdown content, which is later added as children to the container
     `<div data-id="${context.add(meta, md.children)}">`,

@@ -1,9 +1,9 @@
-import { createElement } from 'react'
+import React from 'react'
 import handlers from './handlers'
 
 const defaultHandler = (name) => (props, components) => {
   const Comp = components[name]
-  return Comp ? <Comp {...props} /> : createElement(name, props)
+  return Comp ? <Comp {...props} /> : React.createElement(name, props)
 }
 
 function handleNode(node, components, i) {

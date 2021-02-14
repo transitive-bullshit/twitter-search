@@ -30,13 +30,13 @@ export async function fetchTweetHtml(id) {
 
 export async function fetchUserStatus(tweetId) {
   // If there isn't an API token don't do anything, this is only required for videos.
-  if (!process.env.TWITTER_API_TOKEN) return
+  if (!process.env.TWITTER_ACCESS_TOKEN) return
 
   const res = await fetch(
     `${API_URL}/1.1/statuses/show/${tweetId}.json?include_entities=true&tweet_mode=extended`,
     {
       headers: {
-        authorization: `Bearer ${process.env.TWITTER_API_TOKEN}`
+        authorization: `Bearer ${process.env.TWITTER_ACCESS_TOKEN}`
       }
     }
   )
@@ -65,13 +65,14 @@ export async function fetchTweetWithPoll(tweetId) {
 
   // If there isn't an API token or Twitter Labs is not enabled, don't do anything,
   // this is only required for Polls.
-  if (!process.env.TWITTER_API_TOKEN || !twitterLabsEnabled(expansions)) return
+  if (!process.env.TWITTER_ACCESS_TOKEN || !twitterLabsEnabled(expansions))
+    return
 
   const res = await fetch(
     `${API_URL}/labs/1/tweets?format=compact&expansions=${expansions}&ids=${tweetId}`,
     {
       headers: {
-        authorization: `Bearer ${process.env.TWITTER_API_TOKEN}`
+        authorization: `Bearer ${process.env.TWITTER_ACCESS_TOKEN}`
       }
     }
   )
