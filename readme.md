@@ -2,11 +2,11 @@
 
 > Instantly search across your entire Twitter history with a beautiful UI powered by Algolia.
 
-[![Build Status](https://travis-ci.com/saasify-sh/twitter-search.svg?branch=master)](https://travis-ci.com/saasify-sh/twitter-search) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![Build Status](https://travis-ci.com/transitive-bullshit/twitter-search.svg?branch=master)](https://travis-ci.com/transitive-bullshit/twitter-search) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 <a href="https://twitter-search.io">
   <p align="center">
-    <img src="https://raw.githubusercontent.com/saasify-sh/twitter-search/master/media/screenshot-search-ui-0.jpg" alt="Screenshot of search UI" />
+    <img src="https://raw.githubusercontent.com/transitive-bullshit/twitter-search/master/media/screenshot-search-ui-0.jpg" alt="Screenshot of search UI" />
   </p>
 </a>
 
@@ -27,9 +27,7 @@ The code will remain open source and hopefully still prove useful to other devel
 - 💪 Scales pretty nicely via serverless magics
 - 👍 Super simple -- Algolia and Vercel do all the hard work for us
 
-## Saasify
-
-### Implementation
+## Notes
 
 The webapp uses [Chakra UI](https://chakra-ui.com) as a beautiful and lightweight component library.
 
