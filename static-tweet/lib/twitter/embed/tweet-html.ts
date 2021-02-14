@@ -5,8 +5,8 @@ function getTweetContent($) {
 
   if (!container.length) return
 
-  const meta = {}
-  const content = { meta }
+  const meta: any = {}
+  const content: any = { meta }
 
   // This is the blockquote with the tweet
   const subject = container.find('[data-scribe="section:subject"]')

@@ -7,10 +7,10 @@ githubSchema.tagNames.push('video', 'source')
 githubSchema.attributes['*'].push('className')
 
 // Allow specific attributes that are required for the page to render properly
-githubSchema.attributes['div'] = ['dataType', 'dataId']
-githubSchema.attributes['blockquote'] = ['dataId']
-githubSchema.attributes['img'] = ['dataType', 'src', 'height', 'width']
-githubSchema.attributes['video'] = [
+githubSchema.attributes.div = ['dataType', 'dataId']
+githubSchema.attributes.blockquote = ['dataId']
+githubSchema.attributes.img = ['dataType', 'src', 'height', 'width']
+githubSchema.attributes.video = [
   'poster',
   'controls',
   'preload',
@@ -19,6 +19,6 @@ githubSchema.attributes['video'] = [
   'muted',
   'loop'
 ]
-githubSchema.attributes['source'] = ['src']
+githubSchema.attributes.source = ['src']
 
 export default githubSchema

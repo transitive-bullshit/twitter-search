@@ -18,7 +18,7 @@ function minifyAst(ast) {
     return ast.value
   }
   if (ast.type === 'element') {
-    const node = { tag: ast.tagName }
+    const node: any = { tag: ast.tagName }
     const children = ast.children?.length ? minifyAst(ast.children) : []
 
     if (ast.properties && Object.keys(ast.properties).length) {

@@ -4,11 +4,11 @@ import cheerio from 'cheerio'
 const TWEET_VIDEO_URL = 'https://video.twimg.com/tweet_video'
 
 // Could we use rehype directly and remove cheerio?
-function getTweetContent($, tweet, isMainTweet) {
+function getTweetContent($, tweet, isMainTweet = true) {
   if (!tweet.length) return
 
-  const meta = {}
-  const content = { meta }
+  const meta: any = {}
+  const content: any = { meta }
   const tweetContent = tweet.children('.js-tweet-text-container').children('p')
   const actions = tweet
     .children('.stream-item-footer')

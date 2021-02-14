@@ -46,8 +46,8 @@ export default function rehypeTweet(context) {
   }
 
   return function transformer(tree) {
-    visit(tree, (node) => node.properties?.dataId, visitData)
-    visit(tree, (node) => node.tagName === 'a', visitAnchor)
-    visit(tree, (node) => HEADINGS.includes(node.tagName), visitHeading)
+    visit(tree, (node: any) => node.properties?.dataId, visitData)
+    visit(tree, (node: any) => node.tagName === 'a', visitAnchor)
+    visit(tree, (node: any) => HEADINGS.includes(node.tagName), visitHeading)
   }
 }
