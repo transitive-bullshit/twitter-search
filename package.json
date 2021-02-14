@@ -38,6 +38,7 @@
     "lodash.pick": "^4.4.0",
     "mdast-util-to-string": "1",
     "next": "^10.0.6",
+    "p-map": "^4.0.0",
     "p-retry": "^4.3.0",
     "prop-types": "^15.7.2",
     "qs": "^6.9.3",

@@ -9,23 +9,17 @@ import twitterTheme from '../static-tweet/components/twitter-layout/twitter.modu
 
 export const Tweet: React.FC<{
   id: string
+  ast?: any
   br?: string
   caption?: string
   className?: string
-}> = ({ id, br, caption, className }) => {
+}> = ({ id, ast, br, caption, className }) => {
   const twitter = useTwitter()
   const { data: tweetAst } = useSWR(
     id,
-    (id) => twitter.tweetAstMap[id] || twitter.swrOptions.fetcher(id),
+    (id) => ast || twitter.tweetAstMap[id] || twitter.swrOptions.fetcher(id),
     twitter.swrOptions
   )
-
-  console.log('tweetAst', id, tweetAst)
-
-  // const tweet = useTweet(id)
-
-  // // Happens when `getStaticProps` is traversing the tree to collect the tweet ids
-  // if (!tweet || tweet.ignore) return null
 
   return (
     <main className={cs(twitterTheme.theme, className)}>
@@ -42,7 +36,6 @@ export const Tweet: React.FC<{
           width: 100%;
           max-width: 550px;
           min-width: 220px;
-          margin: 2rem auto;
         }
 
         p {

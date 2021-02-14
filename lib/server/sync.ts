@@ -1,5 +1,7 @@
 import pRetry from 'p-retry'
+import pMap from 'p-map'
 import * as algolia from './algolia'
+import fetchTweetAst from '../../static-tweet/lib/fetchTweetAst'
 
 const algoliaIndexName = process.env.ALGOLIA_INDEX_NAME || 'tweets'
 const MAX_PAGE_SIZE = 200
@@ -29,7 +31,7 @@ export async function syncAccount(
   console.log('sync twitter user', user.id_str, opts)
 
   const handlePage = async (results: any[]) => {
-    const algoliaObjects = tweetsToAlgoliaObjects(results, user)
+    const algoliaObjects = await tweetsToAlgoliaObjects(results, user)
 
     // const id = '1255522888834318339'
     // const tweet = results.find((t) => t.id_str === id)
@@ -97,7 +99,8 @@ export async function configureIndex(index: algolia.SearchIndex) {
       'user',
       'user.name',
       'user.screen_name',
-      'user.profile_image_url'
+      'user.profile_image_url',
+      'ast'
     ],
 
     // make plural and singular matches count the same for these langs
@@ -181,40 +184,50 @@ async function resolveTwitterQueryPage(
   })
 }
 
-function tweetsToAlgoliaObjects(tweets, user) {
-  const algoliaObjects = []
-
+async function tweetsToAlgoliaObjects(tweets, user) {
   // iterate over tweets and build the corresponding algolia records
-  for (let i = 0; i < tweets.length; i++) {
-    const tweet = tweets[i]
-
-    // create the record that will be sent to algolia if there is text to index
-    const algoliaObject = {
-      // use id_str not id (an int), as this int gets truncated in JS
-      // the objectID is the key for the algolia record, and mapping
-      // tweet id to object ID guarantees only one copy of the tweet in algolia
-      objectID: tweet.id_str,
-      id_str: tweet.id_str,
-      text: tweet.full_text || tweet.text || '',
-      created_at: Date.parse(tweet.created_at) / 1000,
-      favorite_count: tweet.favorite_count,
-      retweet_count: tweet.retweet_count,
-      total_count: tweet.retweet_count + tweet.favorite_count,
-      is_retweet: !!tweet.retweeted_status,
-      is_favorite: !!tweet.favorited && user.id_str !== tweet.user.id_str,
-      user: {
-        id_str: tweet.user.id_str,
-        name: tweet.user.name,
-        screen_name: tweet.user.screen_name,
-        profile_image_url: tweet.user.profile_image_url
+  return pMap(
+    tweets,
+    async (tweet: any) => {
+      // create the record that will be sent to algolia if there is text to index
+      const algoliaTweet: any = {
+        // use id_str not id (an int), as this int gets truncated in JS
+        // the objectID is the key for the algolia record, and mapping
+        // tweet id to object ID guarantees only one copy of the tweet in algolia
+        objectID: tweet.id_str,
+        id_str: tweet.id_str,
+        text: tweet.full_text || tweet.text || '',
+        created_at: Date.parse(tweet.created_at) / 1000,
+        favorite_count: tweet.favorite_count,
+        retweet_count: tweet.retweet_count,
+        total_count: tweet.retweet_count + tweet.favorite_count,
+        is_retweet: !!tweet.retweeted_status,
+        is_favorite: !!tweet.favorited && user.id_str !== tweet.user.id_str,
+        user: {
+          id_str: tweet.user.id_str,
+          name: tweet.user.name,
+          screen_name: tweet.user.screen_name,
+          profile_image_url: tweet.user.profile_image_url
+        }
       }
+
+      try {
+        console.log('twitter', '>>> fetchTweetAst', tweet.id_str)
+        algoliaTweet.ast = await fetchTweetAst(tweet.id_str)
+        console.log(
+          'twitter',
+          '<<< fetchTweetAst',
+          tweet.id_str,
+          algoliaTweet.ast
+        )
+      } catch (err) {
+        console.error('error fetching tweet ast', tweet.id_str, err)
+      }
+
+      return algoliaTweet
+    },
+    {
+      concurrency: 4
     }
-
-    algoliaObjects.push(algoliaObject)
-
-    // console.log(JSON.stringify(tweet, null, 2))
-    // console.log(JSON.stringify(algoliaObject, null, 2))
-  }
-
-  return algoliaObjects
+  )
 }

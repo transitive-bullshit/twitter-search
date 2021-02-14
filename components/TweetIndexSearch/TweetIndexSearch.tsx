@@ -1,6 +1,5 @@
 import React from 'react'
 import Masonry from 'react-masonry-css'
-import TweetEmbed from 'react-tweet-embed'
 import { Tweet } from '../tweet'
 import cs from 'classnames'
 // import { InfiniteScroll } from 'react-simple-infinite-scroll'
@@ -95,7 +94,6 @@ export class TweetIndexSearch extends React.Component<any> {
           <div className={styles.results}>
             {focusedTweet && (
               <div key={focusedTweet} className={styles.focusedTweet}>
-                {/* <TweetEmbed id={focusedTweet} options={{ cards: 'hidden' }} /> */}
                 <Tweet id={focusedTweet} />
               </div>
             )}
@@ -268,17 +266,7 @@ export class Hit extends React.Component<any> {
       )
     } else {
       return (
-        // <TweetEmbed
-        //   className={styles.hit}
-        //   id={hit.id_str}
-        //   {...rest}
-        //   options={{
-        //     cards: 'hidden',
-        //     width: config.resultsFormat === 'list' ? 550 : undefined
-        //   }}
-        // />
-
-        <Tweet className={styles.hit} id={hit.id_str} {...rest} />
+        <Tweet className={styles.hit} id={hit.id_str} ast={hit.ast} {...rest} />
       )
     }
   }
