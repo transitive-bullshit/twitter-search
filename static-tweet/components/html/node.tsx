@@ -6,7 +6,7 @@ const defaultHandler = (name) => (props, components) => {
   return Comp ? <Comp {...props} /> : React.createElement(name, props)
 }
 
-function handleNode(node, components, i) {
+function handleNode(node, components, i = undefined) {
   if (!node) {
     return null
   }

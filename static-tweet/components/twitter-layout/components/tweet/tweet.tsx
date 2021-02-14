@@ -2,7 +2,7 @@ import React from 'react'
 import TweetHeader from './tweet-header'
 import TweetInfo from './tweet-info'
 
-const TweetContext = React.createContext()
+const TweetContext = React.createContext<any>({})
 
 export const useTweet = () => React.useContext(TweetContext)
 
@@ -14,6 +14,7 @@ export default function Tweet({ children, data }) {
         <TweetContext.Provider value={data}>{children}</TweetContext.Provider>
         <TweetInfo tweet={data} />
       </blockquote>
+
       <style jsx>{`
         .tweet {
           color: var(--tweet-font-color);
@@ -34,6 +35,7 @@ export default function Tweet({ children, data }) {
           padding: 1.25rem 1.25rem 0.625rem 1.25rem;
         }
       `}</style>
+
       <style jsx global>{`
         .tweet :global(.icon) {
           display: inline-block;

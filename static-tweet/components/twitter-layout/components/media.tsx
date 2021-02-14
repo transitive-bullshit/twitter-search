@@ -1,5 +1,5 @@
 import React from 'react'
-import dynamic from 'next/dynamic'
+// import dynamic from 'next/dynamic' // TODO
 import Image from 'next/image'
 import { useTweet } from './tweet/tweet'
 
@@ -33,6 +33,7 @@ export const Img = ({ width, height, src, ...p }) => {
           padding-bottom: ${(height / width) * 100 || 0}%;
         }
       `}</style>
+
       <style jsx>{`
         details {
           height: 100%;

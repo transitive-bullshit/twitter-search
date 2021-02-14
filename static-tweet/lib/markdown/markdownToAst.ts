@@ -6,7 +6,7 @@ import prism from '@mapbox/rehype-prism'
 
 const handlers = {
   // Add a className to inlineCode so we can differentiate between it and code fragments
-  inlineCode(h, node) {
+  inlineCode(_: any, node) {
     return {
       ...node,
       type: 'element',

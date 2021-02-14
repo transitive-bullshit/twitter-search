@@ -217,7 +217,7 @@ export function getVideo(html, { poster, url }) {
   return $('<div>').append(container.append(video)).html()
 }
 
-export function getTweetData(html, { thread } = {}) {
+export function getTweetData(html, { thread = null } = {}) {
   const $ = cheerio.load(html, {
     decodeEntities: false,
     xmlMode: false

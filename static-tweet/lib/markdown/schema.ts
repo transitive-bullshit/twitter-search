@@ -1,5 +1,7 @@
 // Default schema: https://github.com/syntax-tree/hast-util-sanitize/blob/master/lib/github.json
-import githubSchema from 'hast-util-sanitize/lib/github'
+import schema from 'hast-util-sanitize/lib/github.json'
+
+const githubSchema: any = schema
 
 githubSchema.tagNames.push('video', 'source')
 

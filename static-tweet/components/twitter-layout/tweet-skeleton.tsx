@@ -1,5 +1,5 @@
 import React from 'react'
-import Skeleton from './skeleton'
+import { Skeleton } from './skeleton'
 import styles from './tweet-skeleton.module.css'
 
 export default function TweetSkeleton({ simple = false }) {
@@ -10,6 +10,7 @@ export default function TweetSkeleton({ simple = false }) {
         <Skeleton style={{ height: '7rem', margin: '1.25rem 0' }} />
         <Skeleton style={{ height: '1.25rem' }} />
       </div>
+
       {simple ? null : (
         <div className={styles.footer}>
           <Skeleton style={{ height: '1.25rem' }} />
