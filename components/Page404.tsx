@@ -2,7 +2,9 @@ import React from 'react'
 
 import styles from './styles.module.css'
 
-export const Page404: React.FC = ({ error }) => {
+export const Page404: React.FC<{ error?: { message: string } }> = ({
+  error
+}) => {
   return (
     <>
       <div className={styles.container}>

@@ -1,8 +1,8 @@
 import React from 'react'
 import Masonry from 'react-masonry-css'
 import TweetEmbed from 'react-tweet-embed'
-// import { InfiniteScroll } from 'react-simple-infinite-scroll'
 import cs from 'classnames'
+// import { InfiniteScroll } from 'react-simple-infinite-scroll'
 
 import {
   InstantSearch,
@@ -116,7 +116,7 @@ export class TweetIndexSearch extends React.Component<any> {
 
 const SearchBoxImpl = ({ currentRefinement, isSearchStalled, refine }) => (
   <form noValidate action='' role='search' className={styles.searchBox}>
-    <InputGroup isFullWidth={true}>
+    <InputGroup>
       <InputLeftElement children={<Icon name='search' color='gray.300' />} />
 
       <Input
@@ -200,6 +200,7 @@ const ToggleRefinementImpl = ({
       placement='top'
       hasArrow={true}
       label={tooltips[attribute]}
+      aria-label={tooltips[attribute]}
       showDelay={150}
     >
       <FormLabel htmlFor={attribute}>{label}</FormLabel>
@@ -233,7 +234,7 @@ const MenuImpl = ({ attribute, items, currentRefinement, refine }) => (
 
 const Menu = connectMenu(MenuImpl)
 
-export class Hit extends React.Component {
+export class Hit extends React.Component<any> {
   render() {
     const { hit, ...rest } = this.props
 

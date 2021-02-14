@@ -60,12 +60,12 @@ export default class Twemoji extends React.Component<any> {
               return c
             }
             this.childrenRefs[i] = this.childrenRefs[i] || React.createRef()
-            return React.cloneElement(c, { ref: this.childrenRefs[i] })
+            return React.cloneElement(c as any, { ref: this.childrenRefs[i] })
           })}
         </>
       )
     } else {
-      delete other.options
+      delete (other as any).options
       return React.createElement(tag, { ref: this.rootRef, ...other }, children)
     }
   }

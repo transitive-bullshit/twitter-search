@@ -3,7 +3,9 @@ import Head from 'next/head'
 
 import styles from './styles.module.css'
 
-export const ErrorPage: React.FC<{ statusCode: number }> = ({ statusCode }) => {
+export const ErrorPage: React.FC<{ statusCode?: number }> = ({
+  statusCode
+}) => {
   const title = 'Error'
 
   return (

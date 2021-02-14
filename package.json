@@ -10,10 +10,9 @@
     "node": ">=10"
   },
   "scripts": {
-    "dev": "next dev",
+    "dev": "vercel dev",
     "build": "next build",
     "start": "next start",
-    "deploy": "vercel --prod",
     "analyze": "cross-env ANALYZE=true next build",
     "analyze:server": "cross-env BUNDLE_ANALYZE=server next build",
     "analyze:browser": "cross-env BUNDLE_ANALYZE=browser next build",
@@ -41,7 +40,6 @@
     "react-instantsearch-dom": "^6.4.0",
     "react-masonry-css": "^1.0.14",
     "react-process-string": "^1.2.0",
-    "react-simple-infinite-scroll": "^0.0.1",
     "react-tweet-embed": "^1.2.2",
     "twemoji": "^12.1.6",
     "twitter-lite": "^1.1.0"
