@@ -17,7 +17,7 @@ export function Tweet(props) {
     setText(
       processString([
         {
-          regex: /((http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?)/g,
+          regex: /((http|https|ftp|ftps):\/\/[a-zA-Z0-9\-.]+\.[a-zA-Z]{2,3}(\/\S*)?)/g,
           fn: (key, result) => {
             return (
               <span key={key}>
