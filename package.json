@@ -10,7 +10,7 @@
     "node": ">=10"
   },
   "scripts": {
-    "dev": "vercel dev",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "analyze": "cross-env ANALYZE=true next build",

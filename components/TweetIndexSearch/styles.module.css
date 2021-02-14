@@ -63,13 +63,13 @@
   margin-bottom: 12px;
 }
 
-.hit > twitter-widget {
-  width: auto !important;
-  margin: 0 !important;
+.hit :global(.twitter-tweet) iframe {
+  width: 550px !important;
 }
 
-.list .hit > twitter-widget {
+.list .hit {
   width: 520px !important;
+  margin: 0;
 }
 
 .compact .hit {
@@ -88,6 +88,7 @@
 .focusedTweet {
   position: fixed;
   z-index: 1000;
+  width: calc(min(400px, 40vw));
   top: 0;
   bottom: 0;
   right: 0;

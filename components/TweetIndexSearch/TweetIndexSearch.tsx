@@ -149,40 +149,46 @@ const StatsImpl = ({ processingTimeMS, nbHits }) => (
 const Stats = connectStats(StatsImpl)
 
 const InfiniteHitsImpl = ({ hits, hasMore, refineNext }) => {
-  const body = hits.map((hit) => <Hit key={hit.objectID} hit={hit} />)
-
   return (
     <SearchConfig.Consumer>
-      {(config) => (
-        <div className={cs(styles.infiniteHits, styles[config.resultsFormat])}>
-          {/* <InfiniteScroll
+      {(config) => {
+        const body = hits.map((hit) => (
+          <Hit key={hit.objectID} hit={hit} config={config} />
+        ))
+
+        return (
+          <div
+            className={cs(styles.infiniteHits, styles[config.resultsFormat])}
+          >
+            {/* <InfiniteScroll
             throttle={250}
             threshold={300}
             hasMore={hasMore}
             onLoadMore={refineNext}
           > */}
-          {config.resultsFormat === 'grid' ? (
-            <Masonry
-              className={styles.hits}
-              breakpointCols={2}
-              columnClassName={styles.hitsColumn}
-            >
-              {body}
-            </Masonry>
-          ) : (
-            body
-          )}
-          {/* </InfiniteScroll> */}
+            {config.resultsFormat === 'grid' ? (
+              <Masonry
+                className={styles.hits}
+                breakpointCols={2}
+                columnClassName={styles.hitsColumn}
+              >
+                {body}
+              </Masonry>
+            ) : (
+              body
+            )}
+            {/* </InfiniteScroll> */}
 
-          <Button
-            isDisabled={!hasMore}
-            onClick={refineNext}
-            className={styles.loadMore}
-          >
-            Load More
-          </Button>
-        </div>
-      )}
+            <Button
+              isDisabled={!hasMore}
+              onClick={refineNext}
+              className={styles.loadMore}
+            >
+              Load More
+            </Button>
+          </div>
+        )
+      }}
     </SearchConfig.Consumer>
   )
 }
@@ -236,39 +242,40 @@ const Menu = connectMenu(MenuImpl)
 
 export class Hit extends React.Component<any> {
   render() {
-    const { hit, ...rest } = this.props
+    const { hit, config, ...rest } = this.props
 
-    return (
-      <SearchConfig.Consumer>
-        {(config) =>
-          config.resultsFormat === 'compact' ? (
-            <Tweet
-              className={styles.hit}
-              {...rest}
-              onFocusTweet={config.onFocusTweet}
-              config={{
-                id_str: hit.id_str,
-                user: {
-                  avatar: hit.user.profile_image_url,
-                  nickname: hit.user.screen_name,
-                  name: hit.user.name
-                },
-                text: hit._highlightResult.text.value,
-                date: new Date(hit.created_at * 1000),
-                retweets: hit.retweet_count,
-                likes: hit.favorite_count
-              }}
-            />
-          ) : (
-            <TweetEmbed
-              className={styles.hit}
-              id={hit.id_str}
-              {...rest}
-              options={{ cards: 'hidden' }}
-            />
-          )
-        }
-      </SearchConfig.Consumer>
-    )
+    if (config.resultsFormat === 'compact') {
+      return (
+        <Tweet
+          className={styles.hit}
+          {...rest}
+          onFocusTweet={config.onFocusTweet}
+          config={{
+            id_str: hit.id_str,
+            user: {
+              avatar: hit.user.profile_image_url,
+              nickname: hit.user.screen_name,
+              name: hit.user.name
+            },
+            text: hit._highlightResult.text.value,
+            date: new Date(hit.created_at * 1000),
+            retweets: hit.retweet_count,
+            likes: hit.favorite_count
+          }}
+        />
+      )
+    } else {
+      return (
+        <TweetEmbed
+          className={styles.hit}
+          id={hit.id_str}
+          {...rest}
+          options={{
+            cards: 'hidden',
+            width: config.resultsFormat === 'list' ? 550 : undefined
+          }}
+        />
+      )
+    }
   }
 }

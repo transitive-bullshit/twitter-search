@@ -13,8 +13,10 @@ export default async (
     return res.status(405).send({ error: 'method not allowed' })
   }
 
+  const { full = false } = req.body
+
   const index = await getIndex()
-  await syncAccount(twitterClient, index, true)
+  await syncAccount(twitterClient, index, full)
 
   res.status(200).json({
     indexName: index.indexName,
