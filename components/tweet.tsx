@@ -1,9 +1,8 @@
 import React from 'react'
 import cs from 'classnames'
-import useSWR, { ConfigInterface } from 'swr'
-import fetch from 'unfetch'
+import useSWR from 'swr'
 
-// import { useTweet } from '../static-tweet/tweets'
+import { useTwitter } from '../static-tweet/twitter'
 import Node from '../static-tweet/components/html/node'
 import components from '../static-tweet/components/twitter-layout/components'
 import twitterTheme from '../static-tweet/components/twitter-layout/twitter.module.css'
@@ -13,11 +12,13 @@ export const Tweet: React.FC<{
   br?: string
   caption?: string
   className?: string
-  swrOptions?: ConfigInterface<any, any>
-}> = ({ id, br, caption, className, swrOptions }) => {
-  const fetcher = (url) => fetch(url).then((r) => r.json())
-  const key = `/api/get-tweet-ast/${id}`
-  const { data: tweetAst } = useSWR(key, fetcher, swrOptions)
+}> = ({ id, br, caption, className }) => {
+  const twitter = useTwitter()
+  const { data: tweetAst } = useSWR(
+    id,
+    (id) => twitter.tweetAstMap[id] || twitter.swrOptions.fetcher(id),
+    twitter.swrOptions
+  )
 
   console.log('tweetAst', id, tweetAst)
 
@@ -38,7 +39,8 @@ export const Tweet: React.FC<{
 
       <style jsx>{`
         main {
-          max-width: 100%;
+          width: 100%;
+          max-width: 550px;
           min-width: 220px;
           margin: 2rem auto;
         }

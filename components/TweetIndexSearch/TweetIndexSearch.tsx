@@ -1,6 +1,6 @@
 import React from 'react'
 import Masonry from 'react-masonry-css'
-// import TweetEmbed from 'react-tweet-embed'
+import TweetEmbed from 'react-tweet-embed'
 import { Tweet } from '../tweet'
 import cs from 'classnames'
 // import { InfiniteScroll } from 'react-simple-infinite-scroll'
