@@ -1,11 +1,11 @@
 {
-  "swagger": {
+  "entryFile": "./src/server.ts",
+  "noImplicitAdditionalProperties": "throw-on-extras",
+  "spec": {
     "specVersion": 3,
-    "entryFile": "./src/server.ts",
     "outputDirectory": "dist"
   },
   "routes": {
-    "entryFile": "./src/server.ts",
     "routesDir": "./src",
     "middleware": "koa"
   },

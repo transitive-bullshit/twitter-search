@@ -1,0 +1,98 @@
+.searchBox {
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.filters {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.stats {
+  text-align: center;
+  font-size: 0.8em;
+  margin-bottom: 12px;
+}
+
+.filter {
+  margin-right: 5%;
+}
+
+.filter:last-child {
+  margin-right: 0;
+}
+
+.select {
+  flex: 1;
+  width: auto !important;
+  margin-right: 5%;
+}
+
+.resultsFormat {
+  width: auto !important;
+  margin-left: 5%;
+}
+
+.infiniteHits {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loadMore {
+  margin: 1em 0;
+}
+
+.hits {
+  display: flex;
+  width: 100%;
+}
+
+.hitsColumn {
+  background-clip: padding-box;
+  margin-right: 12px;
+}
+
+.hitsColumn:last-child {
+  margin-right: 0;
+}
+
+.hit {
+  margin-bottom: 12px;
+}
+
+.hit :global(.twitter-tweet) iframe {
+  width: 550px !important;
+}
+
+.list .hit {
+  width: 520px !important;
+  margin: 0;
+}
+
+.compact .hit {
+  margin-bottom: 0;
+}
+
+.loadMoreButton {
+  margin-top: 1em;
+  align-self: center;
+}
+
+.results {
+  position: relative;
+}
+
+.focusedTweet {
+  position: fixed;
+  z-index: 1000;
+  width: calc(min(400px, 40vw));
+  top: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
