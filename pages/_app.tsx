@@ -21,6 +21,14 @@ export default function App({ Component, pageProps }) {
           name='viewport'
           content='width=device-width, initial-scale=1, shrink-to-fit=no'
         />
+
+        <script
+          id='twitter-wjs'
+          type='text/javascript'
+          async
+          defer
+          src='//platform.twitter.com/widgets.js'
+        ></script>
       </Head>
 
       <Component {...pageProps} />
