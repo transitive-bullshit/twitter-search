@@ -28,7 +28,6 @@
     "react-process-string": "^1.2.0",
     "react-simple-infinite-scroll": "^0.0.1",
     "react-tweet-embed": "^1.2.2",
-    "saasify-sdk": "^1.18.11",
     "twemoji": "^12.1.6"
   },
   "devDependencies": {

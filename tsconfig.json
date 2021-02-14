@@ -5,9 +5,10 @@
     "allowJs": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "esModuleInterop": false,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "lib": ["esnext"],
+    "lib": ["esnext", "dom"],
     "outDir": "build"
   },
   "include": ["src"]

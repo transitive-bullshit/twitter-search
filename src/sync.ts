@@ -1,15 +1,13 @@
 import pRetry = require('p-retry')
 import * as algolia from './algolia'
 
-const isProd = process.env.NODE_ENV === 'production'
-
+const algoliaIndexName = process.env.ALGOLIA_INDEX_NAME || 'tweets'
 const MAX_PAGE_SIZE = 200
 const MAX_RESULTS = 20000
 
 export async function syncAccount(
   twitterClient: any,
   index: algolia.SearchIndex,
-  plan: string = 'free',
   full: boolean = false
 ) {
   await configureIndex(index)
@@ -45,20 +43,13 @@ export async function syncAccount(
     resolvePagedTwitterQuery(
       twitterClient,
       'statuses/user_timeline',
-      plan,
       {
         include_rts: true,
         ...opts
       },
       handlePage
     ),
-    resolvePagedTwitterQuery(
-      twitterClient,
-      'favorites/list',
-      plan,
-      opts,
-      handlePage
-    )
+    resolvePagedTwitterQuery(twitterClient, 'favorites/list', opts, handlePage)
   ])
 
   console.log('statuses', numStatuses, 'favorites', numFavorites)
@@ -68,8 +59,8 @@ export async function syncAccount(
   }
 }
 
-export async function getIndex(userId: string) {
-  return algolia.client.initIndex(`tweets-${userId}`)
+export async function getIndex() {
+  return algolia.client.initIndex(algoliaIndexName)
 }
 
 export async function configureIndex(index: algolia.SearchIndex) {
@@ -117,7 +108,6 @@ export async function configureIndex(index: algolia.SearchIndex) {
 async function resolvePagedTwitterQuery(
   twitterClient,
   endpoint: string,
-  plan: string,
   opts: any,
   handlePage: (results: object[]) => Promise<void>
 ): Promise<number> {
@@ -125,7 +115,7 @@ async function resolvePagedTwitterQuery(
   let max_id = undefined
   let page = 0
 
-  const count = plan === 'free' ? 100 : MAX_PAGE_SIZE
+  const count = MAX_PAGE_SIZE
 
   do {
     const params = { count, tweet_mode: 'extended', ...opts }
@@ -169,10 +159,6 @@ async function resolvePagedTwitterQuery(
     await handlePage(pageResults)
 
     if (numResults > MAX_RESULTS) {
-      break
-    }
-
-    if (plan === 'free' && isProd) {
       break
     }
 
