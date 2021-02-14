@@ -2,6 +2,8 @@ import React from 'react'
 import Masonry from 'react-masonry-css'
 import { Tweet } from '../tweet'
 import cs from 'classnames'
+
+// TODO: add infinite scroll instead of manual "load more" button
 // import { InfiniteScroll } from 'react-simple-infinite-scroll'
 
 import {
@@ -33,6 +35,7 @@ import { InlineTweet } from '../InlineTweet/InlineTweet'
 
 import styles from './styles.module.css'
 
+// TODO: add ability to filter by replies vs top-level tweets
 const tooltips = {
   is_retweet: 'Do you want to include tweets that you retweeted?',
   is_favorite: 'Do you want to include tweets that you liked (favorited)?'
