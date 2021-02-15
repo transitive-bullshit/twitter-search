@@ -45,7 +45,7 @@
     "react-instantsearch-dom": "^6.4.0",
     "react-masonry-css": "^1.0.14",
     "react-process-string": "^1.2.0",
-    "react-static-tweets": "^0.2.2",
+    "react-static-tweets": "^0.2.3",
     "react-tweet-embed": "^1.2.2",
     "static-tweets": "^0.2.1",
     "swr": "^0.4.2",

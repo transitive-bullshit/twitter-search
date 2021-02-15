@@ -4308,10 +4308,10 @@ react-spring@^8.0.27:
     "@babel/runtime" "^7.3.1"
     prop-types "^15.5.8"
 
-react-static-tweets@^0.2.2:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/react-static-tweets/-/react-static-tweets-0.2.2.tgz#5cdbc18a6546df8812e5d0650104d97e709ae66e"
-  integrity sha512-QrwGNwSGr+NuZhsJ3G82ptqV7M/1W2Qa9I03H1p4ls/nwv8U8ipfZJ0GoR5nltRyaf+BwKz7ZhAVR3FtkWFZUw==
+react-static-tweets@^0.2.3:
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/react-static-tweets/-/react-static-tweets-0.2.3.tgz#bbd67fc111199be125e2162183d7651c6285f4d4"
+  integrity sha512-BjExkbdzVV9z8zTJK8a68AoqLx2AbPjdlWcTReh2mEZ0t2o03KdASvOWYaT1CQt8rOoKo8mlD+M/ENGDswaaxg==
   dependencies:
     classnames "^2.2.6"
     styled-jsx "^3.4.2"
