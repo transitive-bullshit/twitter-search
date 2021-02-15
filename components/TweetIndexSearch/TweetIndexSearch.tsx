@@ -2,6 +2,14 @@ import React from 'react'
 import Masonry from 'react-masonry-css'
 import { Tweet } from 'react-static-tweets'
 import cs from 'classnames'
+import debounce from 'lodash.debounce'
+
+import {
+  withQueryParams,
+  StringParam,
+  BooleanParam,
+  withDefault
+} from 'use-query-params'
 
 // TODO: add infinite scroll instead of manual "load more" button
 // import { InfiniteScroll } from 'react-simple-infinite-scroll'
@@ -43,15 +51,39 @@ const tooltips = {
 
 const SearchConfig = React.createContext<any>({})
 
-export class TweetIndexSearch extends React.Component<any> {
+export class TweetIndexSearchImpl extends React.Component<any> {
   state = {
-    resultsFormat: 'compact',
     focusedTweet: null
   }
 
+  _onChangeSearchQueryThrottle: any
+
+  constructor(props) {
+    super(props)
+
+    this._onChangeSearchQueryThrottle = debounce(
+      this._onChangeSearchQuery.bind(this),
+      2000
+    )
+  }
+
+  componentWillUnmount() {
+    this._onChangeSearchQueryThrottle.cancel()
+  }
+
   render() {
-    const { indexName } = this.props
-    const { resultsFormat, focusedTweet } = this.state
+    const { indexName, query } = this.props
+    const { focusedTweet } = this.state
+    const {
+      format: resultsFormat,
+      likes: includeLikes,
+      retweets: includeRetweets,
+      query: searchQuery = '',
+      user: userFilter
+    } = query
+
+    // console.log('render', query)
+    const searchQueryDecoded = decodeURIComponent(searchQuery)
 
     return (
       <SearchConfig.Provider
@@ -60,23 +92,34 @@ export class TweetIndexSearch extends React.Component<any> {
         <InstantSearch indexName={indexName} searchClient={searchClient}>
           <Configure hitsPerPage={20} />
 
-          <SearchBox showLoadingIndicator />
+          <SearchBox
+            showLoadingIndicator
+            onChange={this._onChangeSearchQueryThrottle}
+            defaultRefinement={searchQueryDecoded}
+          />
 
           <div className={styles.filters}>
-            <Menu attribute='user.screen_name' limit={30} />
+            <Menu
+              attribute='user.screen_name'
+              limit={30}
+              defaultRefinement={userFilter}
+              onChange={this._onChangeUserFilter}
+            />
 
             <ToggleRefinement
               attribute='is_retweet'
               label='Include retweets?'
-              value={false}
-              defaultRefinement={false}
+              value={includeRetweets}
+              defaultRefinement={!includeRetweets}
+              onChange={this._onChangeIncludeRetweets}
             />
 
             <ToggleRefinement
               attribute='is_favorite'
               label='Include likes?'
-              value={false}
-              defaultRefinement={false}
+              value={includeLikes}
+              defaultRefinement={!includeLikes}
+              onChange={this._onChangeIncludeLikes}
             />
 
             <Select
@@ -109,7 +152,32 @@ export class TweetIndexSearch extends React.Component<any> {
   }
 
   _onChangeResultsFormat = (event) => {
-    this.setState({ resultsFormat: event.target.value })
+    this.props.setQuery({ format: event.target.value })
+  }
+
+  _onChangeIncludeLikes = (value) => {
+    this.props.setQuery({ likes: !value })
+  }
+
+  _onChangeIncludeRetweets = (value) => {
+    this.props.setQuery({ retweets: !value })
+  }
+
+  _onChangeSearchQuery = (value = '') => {
+    if (value) {
+      const query = encodeURIComponent(value)
+      this.props.setQuery({ query })
+    } else {
+      this.props.setQuery({ query: undefined })
+    }
+  }
+
+  _onChangeUserFilter = (value) => {
+    if (value) {
+      this.props.setQuery({ user: value })
+    } else {
+      this.props.setQuery({ user: undefined })
+    }
   }
 
   _onFocusTweet = (tweetId) => {
@@ -117,7 +185,12 @@ export class TweetIndexSearch extends React.Component<any> {
   }
 }
 
-const SearchBoxImpl = ({ currentRefinement, isSearchStalled, refine }) => (
+const SearchBoxImpl = ({
+  currentRefinement,
+  isSearchStalled,
+  refine,
+  onChange
+}) => (
   <form noValidate action='' role='search' className={styles.searchBox}>
     <InputGroup>
       <InputLeftElement children={<Icon name='search' color='gray.300' />} />
@@ -129,7 +202,15 @@ const SearchBoxImpl = ({ currentRefinement, isSearchStalled, refine }) => (
         variant='outline'
         size='lg'
         value={currentRefinement}
-        onChange={(event) => refine(event.currentTarget.value)}
+        onChange={(event) => {
+          const { value } = event.currentTarget
+
+          refine(value)
+
+          if (onChange) {
+            onChange(value)
+          }
+        }}
       />
 
       {isSearchStalled && (
@@ -202,7 +283,8 @@ const ToggleRefinementImpl = ({
   currentRefinement,
   attribute,
   label,
-  refine
+  refine,
+  onChange
 }) => (
   <Flex justify='center' align='center' className={styles.filter}>
     <Tooltip
@@ -218,20 +300,42 @@ const ToggleRefinementImpl = ({
     <Switch
       id={attribute}
       isChecked={!currentRefinement}
-      onChange={() => refine(!currentRefinement)}
+      onChange={() => {
+        const newValue = !currentRefinement
+
+        if (onChange) {
+          onChange(newValue)
+        } else {
+          refine(newValue)
+        }
+      }}
     />
   </Flex>
 )
 
 const ToggleRefinement = connectToggleRefinement(ToggleRefinementImpl)
 
-const MenuImpl = ({ attribute, items, currentRefinement, refine }) => (
+const MenuImpl = ({
+  attribute,
+  items,
+  currentRefinement,
+  refine,
+  onChange
+}) => (
   <Select
     rootProps={{ className: styles.select }}
     name={attribute}
     placeholder='Filter by user'
     value={currentRefinement || ''}
-    onChange={(event) => refine(event.target.value)}
+    onChange={(event) => {
+      const { value } = event.target
+
+      if (onChange) {
+        onChange(value)
+      } else {
+        refine(value)
+      }
+    }}
   >
     {items.map((item) => (
       <option key={item.label} value={item.label}>
@@ -274,3 +378,14 @@ export class Hit extends React.Component<any> {
     }
   }
 }
+
+export const TweetIndexSearch = withQueryParams(
+  {
+    format: withDefault(StringParam, 'list'),
+    likes: withDefault(BooleanParam, true),
+    retweets: withDefault(BooleanParam, true),
+    query: StringParam,
+    user: StringParam
+  },
+  TweetIndexSearchImpl
+)

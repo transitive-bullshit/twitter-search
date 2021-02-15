@@ -2,6 +2,7 @@ import React from 'react'
 
 import { Button, CSSReset, ThemeProvider } from '@chakra-ui/core'
 
+import { QueryParamProvider } from './QueryParamProvider'
 import { TweetIndexSearch } from './TweetIndexSearch/TweetIndexSearch'
 import { LoadingIndicator } from './LoadingIndicator/LoadingIndicator'
 import { Paper } from './Paper/Paper'
@@ -69,20 +70,22 @@ export class App extends React.Component {
       <ThemeProvider>
         <CSSReset />
 
-        <div className={styles.body}>
-          {!isFree && (
-            <Button
-              className={styles.syncButton}
-              isDisabled={syncing || loading}
-              leftIcon='repeat'
-              onClick={this._sync}
-            >
-              Sync Tweets
-            </Button>
-          )}
+        <QueryParamProvider>
+          <div className={styles.body}>
+            {!isFree && (
+              <Button
+                className={styles.syncButton}
+                isDisabled={syncing || loading}
+                leftIcon='repeat'
+                onClick={this._sync}
+              >
+                Sync Tweets
+              </Button>
+            )}
 
-          {content}
-        </div>
+            {content}
+          </div>
+        </QueryParamProvider>
       </ThemeProvider>
     )
   }
