@@ -45,15 +45,16 @@
 
 .body {
   position: relative;
-
   width: 100%;
+  max-width: 100vw;
+  min-height: 100vh;
 
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  padding: 0 12px;
+  padding: 12px;
 }
 
 .content {
