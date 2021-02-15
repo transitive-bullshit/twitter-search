@@ -6,6 +6,7 @@ import { QueryParamProvider } from './QueryParamProvider'
 import { TweetIndexSearch } from './TweetIndexSearch/TweetIndexSearch'
 import { LoadingIndicator } from './LoadingIndicator/LoadingIndicator'
 import { Paper } from './Paper/Paper'
+import { GitHubShareButton } from './GitHubShareButton'
 import * as sdk from '../lib/client/sdk'
 
 import styles from './styles.module.css'
@@ -72,6 +73,8 @@ export class App extends React.Component {
 
         <QueryParamProvider>
           <div className={styles.body}>
+            <GitHubShareButton />
+
             {!isFree && (
               <Button
                 className={styles.syncButton}
