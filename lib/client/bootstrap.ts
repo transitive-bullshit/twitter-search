@@ -8,7 +8,7 @@ export function bootstrap() {
    ██║   ██║  ██║██║  ██║██║ ╚████║███████║██║   ██║   ██║ ╚████╔╝ ███████╗    ██████╔╝███████║
    ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝   ╚═╝   ╚═╝  ╚═══╝  ╚══════╝    ╚═════╝ ╚══════╝
                                                                                                
-   This experiment is built using Next.js, Algolia, and the Twitter API.
-          https://github.com/transitive-bullshit/twitter-search
+   This experiment is built using Next.js, Vercel, Algolia, and the Twitter API.
+            https://github.com/transitive-bullshit/twitter-search
 `)
 }
