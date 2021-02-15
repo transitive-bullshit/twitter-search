@@ -1,7 +1,9 @@
 import React from 'react'
 import Masonry from 'react-masonry-css'
-import TweetEmbed from 'react-tweet-embed'
+import { Tweet } from 'react-static-tweets'
 import cs from 'classnames'
+
+// TODO: add infinite scroll instead of manual "load more" button
 // import { InfiniteScroll } from 'react-simple-infinite-scroll'
 
 import {
@@ -29,10 +31,11 @@ import {
 } from '@chakra-ui/core'
 
 import { searchClient } from 'lib/client/algolia'
-import { Tweet } from '../Tweet/Tweet'
+import { InlineTweet } from '../InlineTweet/InlineTweet'
 
 import styles from './styles.module.css'
 
+// TODO: add ability to filter by replies vs top-level tweets
 const tooltips = {
   is_retweet: 'Do you want to include tweets that you retweeted?',
   is_favorite: 'Do you want to include tweets that you liked (favorited)?'
@@ -94,7 +97,7 @@ export class TweetIndexSearch extends React.Component<any> {
           <div className={styles.results}>
             {focusedTweet && (
               <div key={focusedTweet} className={styles.focusedTweet}>
-                <TweetEmbed id={focusedTweet} options={{ cards: 'hidden' }} />
+                <Tweet id={focusedTweet} />
               </div>
             )}
 
@@ -246,7 +249,7 @@ export class Hit extends React.Component<any> {
 
     if (config.resultsFormat === 'compact') {
       return (
-        <Tweet
+        <InlineTweet
           className={styles.hit}
           {...rest}
           onFocusTweet={config.onFocusTweet}
@@ -266,15 +269,7 @@ export class Hit extends React.Component<any> {
       )
     } else {
       return (
-        <TweetEmbed
-          className={styles.hit}
-          id={hit.id_str}
-          {...rest}
-          options={{
-            cards: 'hidden',
-            width: config.resultsFormat === 'list' ? 550 : undefined
-          }}
-        />
+        <Tweet className={styles.hit} id={hit.id_str} ast={hit.ast} {...rest} />
       )
     }
   }
