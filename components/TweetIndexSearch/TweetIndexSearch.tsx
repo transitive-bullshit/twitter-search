@@ -152,15 +152,29 @@ export class TweetIndexSearchImpl extends React.Component<any> {
   }
 
   _onChangeResultsFormat = (event) => {
-    this.props.setQuery({ format: event.target.value })
+    const { value } = event.target
+
+    if (value !== 'list') {
+      this.props.setQuery({ format: value })
+    } else {
+      this.props.setQuery({ format: undefined })
+    }
   }
 
   _onChangeIncludeLikes = (value) => {
-    this.props.setQuery({ likes: !value })
+    if (value) {
+      this.props.setQuery({ likes: !value })
+    } else {
+      this.props.setQuery({ likes: undefined })
+    }
   }
 
   _onChangeIncludeRetweets = (value) => {
-    this.props.setQuery({ retweets: !value })
+    if (value) {
+      this.props.setQuery({ retweets: !value })
+    } else {
+      this.props.setQuery({ retweets: undefined })
+    }
   }
 
   _onChangeSearchQuery = (value = '') => {
