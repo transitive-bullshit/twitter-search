@@ -19,7 +19,7 @@ export const getStaticProps = async () => {
       revalidate: 10
     }
   } catch (err) {
-    console.error('error', err)
+    console.error('error fetching tweet info', tweetId, err)
 
     throw err
   }
