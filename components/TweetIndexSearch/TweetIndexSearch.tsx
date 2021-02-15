@@ -1,6 +1,6 @@
 import React from 'react'
 import Masonry from 'react-masonry-css'
-import { Tweet } from '../tweet'
+import { Tweet } from 'react-static-tweets'
 import cs from 'classnames'
 
 // TODO: add infinite scroll instead of manual "load more" button

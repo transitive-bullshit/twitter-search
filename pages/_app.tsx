@@ -1,6 +1,9 @@
 // global styles shared across the entire site
 import 'styles/global.css'
 
+// core styles shared by all of react-static-tweets (required)
+import 'react-static-tweets/styles.css'
+
 import React from 'react'
 import Head from 'next/head'
 

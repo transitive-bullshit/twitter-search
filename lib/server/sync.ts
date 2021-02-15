@@ -1,7 +1,7 @@
 import pRetry from 'p-retry'
 import pMap from 'p-map'
+import { fetchTweetAst } from 'static-tweets'
 import * as algolia from './algolia'
-import fetchTweetAst from '../../static-tweet/lib/fetchTweetAst'
 
 const algoliaIndexName = process.env.ALGOLIA_INDEX_NAME || 'tweets'
 const MAX_PAGE_SIZE = 200

@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-
-import fetchTweetAst from '../../static-tweet/lib/fetchTweetAst'
+import { fetchTweetAst } from 'static-tweets'
 
 export default async (
   req: NextApiRequest,

@@ -1,11 +1,11 @@
 import React from 'react'
-// import { Twitter } from '../static-tweet/twitter'
-import fetchTweetAst from 'static-tweet/lib/fetchTweetAst'
-import { Tweet } from 'components/tweet'
+import { fetchTweetAst } from 'static-tweets'
+import { Tweet } from 'react-static-tweets'
 
 // const tweetId = '1238918791947522049'
 // const tweetId = '1358199505280262150'
-const tweetId = '1358581276576391172'
+// const tweetId = '1358581276576391172'
+const tweetId = '1358199505280262150'
 
 export const getStaticProps = async () => {
   try {

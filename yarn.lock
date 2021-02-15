@@ -1487,7 +1487,7 @@ cipher-base@^1.0.0, cipher-base@^1.0.1, cipher-base@^1.0.3:
     inherits "^2.0.1"
     safe-buffer "^5.0.1"
 
-classnames@2.2.6, classnames@^2.2.5:
+classnames@2.2.6, classnames@^2.2.5, classnames@^2.2.6:
   version "2.2.6"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
   integrity sha512-JR/iSQOSt+LQIWwrwEzJ9uk0xfN3mTVYMwt1Ir5mUcSN6pU+V4zQFFaJsclJbPuAUQH+yfWef6tm7l1quW3C8Q==
@@ -4308,6 +4308,15 @@ react-spring@^8.0.27:
     "@babel/runtime" "^7.3.1"
     prop-types "^15.5.8"
 
+react-static-tweets@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/react-static-tweets/-/react-static-tweets-0.2.2.tgz#5cdbc18a6546df8812e5d0650104d97e709ae66e"
+  integrity sha512-QrwGNwSGr+NuZhsJ3G82ptqV7M/1W2Qa9I03H1p4ls/nwv8U8ipfZJ0GoR5nltRyaf+BwKz7ZhAVR3FtkWFZUw==
+  dependencies:
+    classnames "^2.2.6"
+    styled-jsx "^3.4.2"
+    swr "^0.4.2"
+
 react-tweet-embed@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/react-tweet-embed/-/react-tweet-embed-1.2.2.tgz#b518510a6e6ef17609f9c9b16bc4775624730d8a"
@@ -4773,6 +4782,25 @@ state-toggle@^1.0.0:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/state-toggle/-/state-toggle-1.0.3.tgz#e123b16a88e143139b09c6852221bc9815917dfe"
   integrity sha512-d/5Z4/2iiCnHw6Xzghyhb+GcmF89bxwgXG60wjIiZaxnymbyOmI8Hk4VqHXiVVp6u2ysaskFfXg3ekCj4WNftQ==
+
+static-tweets@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/static-tweets/-/static-tweets-0.2.1.tgz#63a105ddbb38cda00b96a802e201270fe8ab0726"
+  integrity sha512-AA41XTeMJkKNrcs9zecxInWK6Tj7xNXNzl0Z5GEeAOIM/nHgRc6FIRnG89RuYeNwf3QAw/x2/0Bey4rLyBLdZw==
+  dependencies:
+    "@mapbox/rehype-prism" "^0.5.0"
+    "@vercel/fetch" "^6.1.0"
+    cheerio "^1.0.0-rc.5"
+    github-slugger "^1.3.0"
+    hast-util-sanitize "^3.0.2"
+    mdast-util-to-string "1"
+    rehype-parse "6"
+    rehype-raw "4"
+    rehype-sanitize "3"
+    remark-parse "7"
+    remark-rehype "^8.0.0"
+    unified "8"
+    unist-util-visit "^2.0.3"
 
 "statuses@>= 1.5.0 < 2":
   version "1.5.0"
