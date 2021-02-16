@@ -205,7 +205,16 @@ const SearchBoxImpl = ({
   refine,
   onChange
 }) => (
-  <form noValidate action='' role='search' className={styles.searchBox}>
+  <form
+    noValidate
+    action=''
+    role='search'
+    className={styles.searchBox}
+    onSubmit={(e) => {
+      e.preventDefault()
+      return false
+    }}
+  >
     <InputGroup>
       <InputLeftElement children={<Icon name='search' color='gray.300' />} />
 
