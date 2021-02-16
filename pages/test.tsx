@@ -25,6 +25,6 @@ export const getStaticProps = async () => {
   }
 }
 
-export default function NotionDomainPage({ tweetId, tweetAst }) {
+export default function TweetTestPage({ tweetId, tweetAst }) {
   return <Tweet id={tweetId} ast={tweetAst} />
 }

@@ -8,6 +8,6 @@ export const getStaticProps = async () => {
   }
 }
 
-export default function NotionDomainPage(props) {
+export default function TwitterSearchHomePage(props) {
   return <App {...props} />
 }

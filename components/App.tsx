@@ -13,15 +13,18 @@ import styles from './styles.module.css'
 
 export class App extends React.Component {
   state = {
-    status: 'loading',
+    status: 'ready',
     loading: false,
     syncing: false,
-    searchIndex: null,
+    searchIndex: {
+      indexName: 'tweets',
+      exists: true
+    },
     error: null
   }
 
   componentDidMount() {
-    this._reset()
+    this._reset(false)
   }
 
   render() {
@@ -93,14 +96,12 @@ export class App extends React.Component {
     )
   }
 
-  _reset = () => {
-    this.setState({ loading: true })
+  _reset = (loading = true) => {
+    this.setState({ loading })
 
     sdk
       .getIndex()
       .then((searchIndex) => {
-        console.log({ searchIndex })
-
         if (!searchIndex.exists) {
           this._sync({ first: true })
         }
@@ -133,7 +134,6 @@ export class App extends React.Component {
     sdk
       .syncIndex()
       .then((searchIndex) => {
-        console.log({ searchIndex })
         if (timeout) {
           clearTimeout(timeout)
           timeout = null
