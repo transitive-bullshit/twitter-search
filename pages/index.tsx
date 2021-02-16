@@ -1,4 +1,3 @@
-import React from 'react'
 import { App } from 'components'
 
 export const getStaticProps = async () => {
@@ -8,6 +7,4 @@ export const getStaticProps = async () => {
   }
 }
 
-export default function TwitterSearchHomePage(props) {
-  return <App {...props} />
-}
+export default App
