@@ -18,3 +18,8 @@ html {
 body {
   overflow-x: hidden;
 }
+
+img,
+svg {
+  display: inline-block;
+}
