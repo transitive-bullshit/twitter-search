@@ -25,12 +25,6 @@ The code will remain open source and hopefully still prove useful to other devel
 - 💪 Scales pretty nicely via serverless magics
 - 👍 Super simple -- Algolia and Vercel do all the hard work for us
 
-## Notes
-
-The webapp uses [Chakra UI](https://chakra-ui.com) as a beautiful and lightweight component library.
-
-Of course, this product's core feature set wouldn't be possible without [Algolia](https://www.algolia.com/) powering the search and [Vercel](https://vercel.com) hosting the frontend + lambdas.
-
 ## License
 
 MIT © [Travis Fischer](https://transitivebullsh.it)
