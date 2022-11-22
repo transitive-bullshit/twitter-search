@@ -4,7 +4,7 @@
 
 [![Build Status](https://travis-ci.com/transitive-bullshit/twitter-search.svg?branch=master)](https://travis-ci.com/transitive-bullshit/twitter-search) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
-<a href="https://twitter-search.vercel.app">
+<a href="https://twitter-search.transitivebullsh.it">
   <p align="center">
     <img src="https://raw.githubusercontent.com/transitive-bullshit/twitter-search/master/media/screenshot-search-ui-0.jpg" alt="Screenshot of search UI" />
   </p>
